@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard - Ehlanzeni Star School</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script type="module" src="../scripts/dashboard.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1e40af',
+                        secondary: '#3b82f6',
+                        accent: '#f59e0b',
+                        dark: '#1f2937',
+                        light: '#f8fafc'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+        }
+
+        .sidebar-gradient {
+            background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+        }
+
+        .status-badge {
+            @apply px-3 py-1 rounded-full text-sm font-semibold;
+        }
+
+        .status-pending {
+            @apply bg-yellow-100 text-yellow-800;
+        }
+
+        .status-approved {
+            @apply bg-green-100 text-green-800;
+        }
+
+        .status-rejected {
+            @apply bg-red-100 text-red-800;
+        }
+
+        .timeline-dot {
+            @apply absolute w-4 h-4 rounded-full border-4 border-white;
+        }
+
+        .timeline-item.completed .timeline-dot {
+            @apply bg-green-500;
+        }
+
+        .timeline-item.current .timeline-dot {
+            @apply bg-blue-500 animate-pulse;
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.2);
+        }
+
+        .timeline-item.pending .timeline-dot {
+            @apply bg-gray-300;
+        }
+
+        .form-group {
+            @apply mb-6;
+        }
+
+        .form-group label {
+            @apply block text-sm font-medium text-gray-700 mb-2;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            @apply w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200;
+        }
+
+        .form-group input:read-only {
+            @apply bg-gray-50 text-gray-500 cursor-not-allowed;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .toast {
+            @apply fixed top-6 right-6 px-6 py-4 rounded-lg shadow-lg text-white font-medium z-50 transform transition-all duration-300;
+            display: none;
+        }
+
+        .toast.success {
+            @apply bg-green-500;
+        }
+
+        .toast.error {
+            @apply bg-red-500;
+        }
+
+        .toast.info {
+            @apply bg-blue-500;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50 min-h-screen">
+    <!-- Header -->
+    <header class="gradient-bg text-white shadow-lg sticky top-0 z-40">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-4">
+                    <img src="../src/images/logo1.png" alt="School Logo" class="h-12 w-12 rounded-lg shadow-md">
+                    <div>
+                        <h1 class="text-2xl font-bold">EHLANZENI STAR SCHOOL</h1>
+                        <p class="text-blue-100 text-sm">Student Portal</p>
+                    </div>
+                </div>
+                <nav class="flex items-center space-x-6">
+                    <button id="logout-btn"
+                        class="bg-white text-primary px-6 py-2 rounded-lg font-semibold hover:bg-gray-100 transition-all duration-200 shadow-md hover:shadow-lg flex items-center space-x-2">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>LOGOUT</span>
+                    </button>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <div class="flex min-h-screen">
+        <!-- Sidebar -->
+        <div class="sidebar-gradient text-white w-80 flex-shrink-0 shadow-xl">
+            <div class="p-6 border-b border-gray-700">
+                <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-6 shadow-lg">
+                    <div class="flex items-center space-x-4 mb-4">
+                        <div
+                            class="w-16 h-16 bg-gradient-to-br from-accent to-yellow-400 rounded-full flex items-center justify-center shadow-lg">
+                            <i class="fas fa-user-graduate text-2xl text-white"></i>
+                        </div>
+                        <div>
+                            <h3 id="student-name" class="font-bold text-lg truncate">Loading...</h3>
+                            <p class="text-gray-300 text-sm">Student</p>
+                        </div>
+                    </div>
+                    <div class="space-y-2">
+                        <p id="student-code" class="text-sm text-gray-300 flex items-center space-x-2">
+                            <i class="fas fa-id-card text-accent"></i>
+                            <span>Code: Loading...</span>
+                        </p>
+                        <p id="application-status"
+                            class="status-pending status-badge inline-flex items-center space-x-2">
+                            <i class="fas fa-clock"></i>
+                            <span>Loading...</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <nav class="p-6 space-y-2">
+                <a href="#status"
+                    class="nav-item flex items-center space-x-4 p-4 rounded-xl bg-blue-600 text-white shadow-lg transition-all duration-200"
+                    data-tab="status">
+                    <i class="fas fa-tasks w-6 text-center"></i>
+                    <span>Application Status</span>
+                </a>
+                <a href="#profile"
+                    class="nav-item flex items-center space-x-4 p-4 rounded-xl text-gray-300 hover:bg-gray-700/50 hover:text-white transition-all duration-200"
+                    data-tab="profile">
+                    <i class="fas fa-user w-6 text-center"></i>
+                    <span>Personal Details</span>
+                </a>
+                <a href="#education"
+                    class="nav-item flex items-center space-x-4 p-4 rounded-xl text-gray-300 hover:bg-gray-700/50 hover:text-white transition-all duration-200"
+                    data-tab="education">
+                    <i class="fas fa-graduation-cap w-6 text-center"></i>
+                    <span>Education Details</span>
+                </a>
+                <a href="#guardian"
+                    class="nav-item flex items-center space-x-4 p-4 rounded-xl text-gray-300 hover:bg-gray-700/50 hover:text-white transition-all duration-200"
+                    data-tab="guardian">
+                    <i class="fas fa-users w-6 text-center"></i>
+                    <span>Guardian Details</span>
+                </a>
+            </nav>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-1 p-8 bg-gradient-to-br from-gray-50 to-blue-50">
+            <!-- Status Tab -->
+            <div id="status-tab" class="tab-content active">
+                <div class="flex items-center justify-between mb-8">
+                    <div>
+                        <h2 class="text-3xl font-bold text-gray-800">Application Status</h2>
+                        <p class="text-gray-600 mt-2">Track your application progress in real-time</p>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <div class="bg-white rounded-xl p-4 shadow-lg">
+                            <p class="text-sm text-gray-500">Application Date</p>
+                            <p id="submission-date" class="font-semibold text-gray-800">Loading...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-2xl shadow-xl p-8 mb-8">
+                    <div class="flex items-center justify-between mb-8">
+                        <div>
+                            <h3 id="status-title" class="text-2xl font-bold text-gray-800">Application Under Review</h3>
+                            <p class="text-gray-600 mt-2">We're currently reviewing your application</p>
+                        </div>
+                        <span id="status-badge" class="status-pending status-badge text-lg px-6 py-2">Loading...</span>
+                    </div>
+
+                    <div class="relative">
+                        <!-- Timeline -->
+                        <!-- Timeline -->
+                        <div class="space-y-8">
+                            <!-- Step 1 - Application Submitted -->
+                            <div class="timeline-item completed flex items-start space-x-6">
+                                <div class="relative">
+                                    <div class="timeline-dot"></div>
+                                    <div class="absolute left-2 top-6 w-0.5 h-16 bg-green-500"></div>
+                                </div>
+                                <div class="flex-1 pt-1">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <h4 class="text-lg font-semibold text-gray-800">Application Submitted</h4>
+                                        <span class="text-green-500 text-sm font-medium flex items-center space-x-1">
+                                            <i class="fas fa-check-circle"></i>
+                                            <span>Completed</span>
+                                        </span>
+                                    </div>
+                                    <p class="text-gray-600">Your application has been successfully submitted and is in
+                                        our system.</p>
+                                    <p id="submission-date-timeline" class="text-sm text-gray-500 mt-1">Date: Loading...
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- Step 2 - Admin Review -->
+                            <div class="timeline-item current flex items-start space-x-6">
+                                <div class="relative">
+                                    <div class="timeline-dot"></div>
+                                    <div class="absolute left-2 top-6 w-0.5 h-16 bg-gray-200"></div>
+                                </div>
+                                <div class="flex-1 pt-1">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <h4 class="text-lg font-semibold text-gray-800">Admin Review</h4>
+                                        <span id="admin-review-status"
+                                            class="text-blue-500 text-sm font-medium flex items-center space-x-1">
+                                            <i class="fas fa-sync-alt animate-spin"></i>
+                                            <span>In Progress</span>
+                                        </span>
+                                    </div>
+                                    <p class="text-gray-600">Your application is being reviewed by our administration
+                                        team.</p>
+                                    <p id="admin-review-date" class="text-sm text-gray-500 mt-1"></p>
+                                </div>
+                            </div>
+
+                            <!-- Step 3 - Payment Verification -->
+                            <div class="timeline-item pending flex items-start space-x-6">
+                                <div class="relative">
+                                    <div class="timeline-dot"></div>
+                                    <div class="absolute left-2 top-6 w-0.5 h-16 bg-gray-200"></div>
+                                </div>
+                                <div class="flex-1 pt-1">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <h4 class="text-lg font-semibold text-gray-800">Payment Verification</h4>
+                                        <span id="payment-status"
+                                            class="text-gray-400 text-sm font-medium">Pending</span>
+                                    </div>
+                                    <p class="text-gray-600">Awaiting payment confirmation and verification.</p>
+                                </div>
+                            </div>
+
+                            <!-- Step 4 - Approval & Enrollment -->
+                            <div class="timeline-item pending flex items-start space-x-6">
+                                <div class="relative">
+                                    <div class="timeline-dot"></div>
+                                </div>
+                                <div class="flex-1 pt-1">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <h4 class="text-lg font-semibold text-gray-800">Approval & Enrollment</h4>
+                                        <span id="enrollment-status"
+                                            class="text-gray-400 text-sm font-medium">Pending</span>
+                                    </div>
+                                    <p class="text-gray-600">Final approval and enrollment completion.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bg-white rounded-xl p-6 shadow-lg text-center">
+                        <i class="fas fa-clock text-3xl text-yellow-500 mb-4"></i>
+                        <h4 class="font-semibold text-gray-800 mb-2">Estimated Time</h4>
+                        <p class="text-gray-600">3-5 Business Days</p>
+                    </div>
+                    <div class="bg-white rounded-xl p-6 shadow-lg text-center">
+                        <i class="fas fa-envelope text-3xl text-blue-500 mb-4"></i>
+                        <h4 class="font-semibold text-gray-800 mb-2">Need Help?</h4>
+                        <p class="text-gray-600">Contact Admissions</p>
+                    </div>
+                    <div class="bg-white rounded-xl p-6 shadow-lg text-center">
+                        <i class="fas fa-download text-3xl text-green-500 mb-4"></i>
+                        <h4 class="font-semibold text-gray-800 mb-2">Documents</h4>
+                        <p class="text-gray-600">Download Forms</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Profile Tab -->
+            <div id="profile-tab" class="tab-content">
+                <div class="mb-8">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-2">Personal Details</h2>
+                    <p class="text-gray-600">Update your personal information and contact details</p>
+                </div>
+
+                <form id="profile-form" class="bg-white rounded-2xl shadow-xl p-8">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+                        <div>
+                            <h3 class="text-xl font-semibold text-gray-800 mb-6 flex items-center space-x-3">
+                                <i class="fas fa-user-circle text-blue-500"></i>
+                                <span>Personal Information</span>
+                            </h3>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div class="form-group">
+                                    <label>First Name *</label>
+                                    <input type="text" id="edit-firstName" required class="w-full">
+                                </div>
+                                <div class="form-group">
+                                    <label>Last Name *</label>
+                                    <input type="text" id="edit-lastName" required class="w-full">
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div class="form-group">
+                                    <label>ID Number *</label>
+                                    <input type="text" id="edit-idNumber" required class="w-full">
+                                </div>
+                                <div class="form-group">
+                                    <label>Race *</label>
+                                    <input type="text" id="edit-race" required class="w-full">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Email *</label>
+                                <input type="email" id="edit-email" required readonly class="w-full">
+                            </div>
+                            <div class="form-group">
+                                <label>Phone *</label>
+                                <input type="tel" id="edit-phone" required class="w-full">
+                            </div>
+                        </div>
+
+                        <div>
+                            <h3 class="text-xl font-semibold text-gray-800 mb-6 flex items-center space-x-3">
+                                <i class="fas fa-home text-green-500"></i>
+                                <span>Address Information</span>
+                            </h3>
+
+                            <div class="form-group">
+                                <label>Address Line 1 *</label>
+                                <input type="text" id="edit-addressLine1" required class="w-full">
+                            </div>
+                            <div class="form-group">
+                                <label>Address Line 2</label>
+                                <input type="text" id="edit-addressLine2" class="w-full">
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div class="form-group">
+                                    <label>City *</label>
+                                    <input type="text" id="edit-city" required class="w-full">
+                                </div>
+                                <div class="form-group">
+                                    <label>Province *</label>
+                                    <input type="text" id="edit-province" required class="w-full">
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div class="form-group">
+                                    <label>Postal Code *</label>
+                                    <input type="text" id="edit-postalCode" required class="w-full">
+                                </div>
+                                <div class="form-group">
+                                    <label>Country</label>
+                                    <input type="text" id="edit-country" value="South Africa" readonly class="w-full">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-end">
+                        <button type="submit"
+                            class="save-btn bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-all duration-200 shadow-lg hover:shadow-xl flex items-center space-x-3">
+                            <i class="fas fa-save"></i>
+                            <span>Save Changes</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Education Tab -->
+            <div id="education-tab" class="tab-content">
+                <div class="mb-8">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-2">Education Details</h2>
+                    <p class="text-gray-600">Manage your educational background and preferences</p>
+                </div>
+
+                <form id="education-form" class="bg-white rounded-2xl shadow-xl p-8 max-w-3xl">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div class="form-group">
+                            <label>Highest Grade Passed *</label>
+                            <select id="edit-highestGrade" required class="w-full">
+                                <option value="">Select Grade</option>
+                                <option>12</option>
+                                <option>11</option>
+                                <option>10</option>
+                                <option>9</option>
+                                <option>ABET</option>
+                                <option>Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Attendance Type *</label>
+                            <select id="edit-attendanceType" required class="w-full">
+                                <option value="">Select Attendance Type</option>
+                                <option>Part Time. Mon - Fri (16:00 to 19:00)</option>
+                                <option>Full Time Mon - Fri (08:00 to 15:00)</option>
+                                <option>Saturday (08:00 to 14:00)</option>
+                                <option>Online Classes (Pre-recorded)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div class="form-group">
+                            <label>Previous School *</label>
+                            <input type="text" id="edit-previousSchool" required class="w-full">
+                        </div>
+                        <div class="form-group">
+                            <label>School Province *</label>
+                            <input type="text" id="edit-schoolProvince" required class="w-full">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Subjects Registering *</label>
+                        <textarea id="edit-subjects" rows="4" required class="w-full"
+                            placeholder="List each subject on a new line..."></textarea>
+                    </div>
+
+                    <div class="flex justify-end">
+                        <button type="submit"
+                            class="save-btn bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-all duration-200 shadow-lg hover:shadow-xl flex items-center space-x-3">
+                            <i class="fas fa-save"></i>
+                            <span>Save Changes</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Guardian Tab -->
+            <div id="guardian-tab" class="tab-content">
+                <div class="mb-8">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-2">Guardian Details</h2>
+                    <p class="text-gray-600">Update your guardian's information and contact details</p>
+                </div>
+
+                <form id="guardian-form" class="bg-white rounded-2xl shadow-xl p-8">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        <div>
+                            <h3 class="text-xl font-semibold text-gray-800 mb-6 flex items-center space-x-3">
+                                <i class="fas fa-user-friends text-purple-500"></i>
+                                <span>Guardian Information</span>
+                            </h3>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div class="form-group">
+                                    <label>First Name *</label>
+                                    <input type="text" id="edit-guardianFirstName" required class="w-full">
+                                </div>
+                                <div class="form-group">
+                                    <label>Last Name *</label>
+                                    <input type="text" id="edit-guardianLastName" required class="w-full">
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div class="form-group">
+                                    <label>ID Number *</label>
+                                    <input type="text" id="edit-guardianIdNumber" required class="w-full">
+                                </div>
+                                <div class="form-group">
+                                    <label>Race *</label>
+                                    <input type="text" id="edit-guardianRace" required class="w-full">
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div class="form-group">
+                                    <label>Email *</label>
+                                    <input type="email" id="edit-guardianEmail" required class="w-full">
+                                </div>
+                                <div class="form-group">
+                                    <label>Phone *</label>
+                                    <input type="tel" id="edit-guardianPhone" required class="w-full">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h3 class="text-xl font-semibold text-gray-800 mb-6 flex items-center space-x-3">
+                                <i class="fas fa-briefcase text-orange-500"></i>
+                                <span>Employment Information</span>
+                            </h3>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div class="form-group">
+                                    <label>Employment Status *</label>
+                                    <select id="edit-guardianEmploymentStatus" required class="w-full">
+                                        <option value="">Select Status</option>
+                                        <option>Employed</option>
+                                        <option>Self-Employed</option>
+                                        <option>Unemployed</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Place of Employment</label>
+                                    <input type="text" id="edit-guardianWorkplace" class="w-full">
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div class="form-group">
+                                    <label>Work Number</label>
+                                    <input type="text" id="edit-guardianWorkPhone" class="w-full">
+                                </div>
+                                <div class="form-group">
+                                    <label>Work Email</label>
+                                    <input type="email" id="edit-guardianWorkEmail" class="w-full">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-end mt-8">
+                        <button type="submit"
+                            class="save-btn bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-all duration-200 shadow-lg hover:shadow-xl flex items-center space-x-3">
+                            <i class="fas fa-save"></i>
+                            <span>Save Changes</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast" class="toast"></div>
+
+    <script>
+        // Tab switching functionality
+        document.addEventListener('DOMContentLoaded', function () {
+            const navItems = document.querySelectorAll('.nav-item');
+
+            navItems.forEach(item => {
+                item.addEventListener('click', function (e) {
+                    e.preventDefault();
+
+                    // Remove active class from all items
+                    navItems.forEach(nav => {
+                        nav.classList.remove('bg-blue-600', 'text-white');
+                        nav.classList.add('text-gray-300', 'hover:bg-gray-700/50', 'hover:text-white');
+                    });
+
+                    // Add active class to clicked item
+                    this.classList.remove('text-gray-300', 'hover:bg-gray-700/50', 'hover:text-white');
+                    this.classList.add('bg-blue-600', 'text-white');
+
+                    // Hide all tab contents
+                    const tabContents = document.querySelectorAll('.tab-content');
+                    tabContents.forEach(tab => tab.classList.remove('active'));
+
+                    // Show selected tab content
+                    const tabId = this.getAttribute('data-tab') + '-tab';
+                    document.getElementById(tabId).classList.add('active');
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

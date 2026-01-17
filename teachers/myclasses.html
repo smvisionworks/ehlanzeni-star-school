@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Classes - Teacher</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+   <link rel="stylesheet" href="/css/teachers/myclasses.css">
+   <link rel="stylesheet" href="/css/logout-modal.css">
+   <link rel="shortcut icon" href="/src/images/LOGO1.png" type="image/x-icon">
+</head>
+<body>
+    <div class="sidebar">
+        <div>
+            <div class="profile">
+                <div class="symbol">🎓</div> 
+                <h3 id="teacherName"></h3>
+                <p>Teacher</p>
+            </div>
+            <div class="nav-links">
+        <a href="/teachers/teacherdashboard.html" class="active"><i class="fas fa-home"></i> Dashboard</a>
+        <a href="/teachers/myclasses.html"><i class="fas fa-users"></i> My Classes</a>
+        <a href="/teachers/teacherresources.html"><i class="fas fa-folder"></i> Resources</a>
+        <a href="/teachers/teachercalendar.html"><i class="fas fa-calendar-alt"></i> Calendar</a>
+      </div>
+        </div>
+        <div class="logout">
+            <button class="logout-btn" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</button>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <h1>My Classes</h1>
+        <div class="class-container" id="classContainer"></div>
+        <div class="past-classes-section">
+            <h2>Past Classes</h2>
+            <div class="past-class-container" id="pastClassContainer"></div>
+        </div>
+    </div>
+
+    <div id="logoutModal" class="modal">
+        <div class="modal-content">
+            <button class="close-button">&times;</button>
+            <h3>Confirm Logout</h3>
+            <p>Are you sure you want to log out of Ehlanzeni Star School?</p>
+            <div class="modal-buttons">
+                <button class="cancel-btn" id="cancelLogoutBtn">Cancel</button>
+                <button class="confirm-btn" id="confirmLogoutBtn">Logout</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast" class="toast"></div>
+    <div id="loading" class="loading">Loading classes...</div>
+<script type="module" src="/scripts/teachers/teacher-myclasses.js"></script>
+<script src="/scripts/logout.js"></script>
+    
+</body>
+</html>

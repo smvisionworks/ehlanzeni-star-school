@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monthly Payment Pending - Ehlanzeni Star School</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="shortcut icon" href="/src/images/LOGO1.png" type="image/x-icon">
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .payment-card {
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.95);
+        }
+
+        .status-icon {
+            animation: pulse-icon 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse-icon {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.05);
+                opacity: 0.9;
+            }
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, #fff5e6 0%, #ffe8cc 100%);
+            border-left: 4px solid #f59e0b;
+        }
+
+        .steps-list {
+            counter-reset: step-counter;
+            list-style: none;
+            padding: 0;
+        }
+
+        .steps-list li {
+            counter-increment: step-counter;
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+        }
+
+        .steps-list li::before {
+            content: counter(step-counter);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 2.5rem;
+            height: 2.5rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 50%;
+            font-weight: bold;
+            flex-shrink: 0;
+            margin-right: 1rem;
+        }
+
+        .footer-text {
+            color: #6b7280;
+        }
+    </style>
+</head>
+
+<body class="flex items-center justify-center p-4">
+    <div class="payment-card rounded-3xl shadow-2xl p-8 md:p-12 max-w-2xl w-full">
+        <!-- Header -->
+        <div class="text-center mb-10">
+            <div class="flex justify-center mb-6">
+                <div class="bg-amber-100 p-6 rounded-full">
+                    <i class="fas fa-clock text-5xl text-amber-600 status-icon"></i>
+                </div>
+            </div>
+            <h1 class="text-4xl font-bold text-gray-800 mb-3">Monthly Payment Pending</h1>
+            <p class="text-lg text-gray-600">Please complete your monthly payment to access the learning portal</p>
+        </div>
+
+        <!-- Student Info -->
+        <div class="bg-gray-50 rounded-xl p-6 mb-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <p class="text-sm text-gray-600 font-semibold mb-1">Student Name</p>
+                    <p id="student-name" class="text-xl font-bold text-gray-800">Loading...</p>
+                </div>
+                <div>
+                    <p class="text-sm text-gray-600 font-semibold mb-1">Student Code</p>
+                    <p id="student-code" class="text-xl font-bold text-purple-700">Loading...</p>
+                </div>
+                <div>
+                    <p class="text-sm text-gray-600 font-semibold mb-1">Current Month</p>
+                    <p id="current-month" class="text-xl font-bold text-gray-800">Loading...</p>
+                </div>
+                <div>
+                    <p class="text-sm text-gray-600 font-semibold mb-1">Status</p>
+                    <p class="text-xl font-bold">
+                        <span class="bg-amber-100 text-amber-800 px-4 py-2 rounded-full inline-flex items-center space-x-2">
+                            <i class="fas fa-exclamation-circle"></i>
+                            <span>Pending Payment</span>
+                        </span>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Information Box -->
+        <div class="info-box rounded-xl p-6 mb-8">
+            <div class="flex items-start space-x-4">
+                <i class="fas fa-info-circle text-2xl text-amber-600 flex-shrink-0 mt-1"></i>
+                <div>
+                    <h3 class="font-bold text-gray-800 mb-2">Payment Required</h3>
+                    <p class="text-gray-700">Your monthly payment for the current month is pending. You cannot access the learning portal until this payment is confirmed by the administration team.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- What to Do -->
+        <div class="mb-10">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6">What To Do Next:</h2>
+            <ol class="steps-list">
+                <li>
+                    <div>
+                        <p class="font-semibold text-gray-800">Make Your Payment</p>
+                        <p class="text-gray-600 text-sm">Contact the school administration for payment methods and bank details</p>
+                    </div>
+                </li>
+                <li>
+                    <div>
+                        <p class="font-semibold text-gray-800">Provide Proof of Payment</p>
+                        <p class="text-gray-600 text-sm">Submit your proof of payment to the admissions office</p>
+                    </div>
+                </li>
+                <li>
+                    <div>
+                        <p class="font-semibold text-gray-800">Wait for Confirmation</p>
+                        <p class="text-gray-600 text-sm">The administration will verify your payment and update your account</p>
+                    </div>
+                </li>
+                <li>
+                    <div>
+                        <p class="font-semibold text-gray-800">Access Your Portal</p>
+                        <p class="text-gray-600 text-sm">Once confirmed, you'll be able to access the dashboard and learning portal</p>
+                    </div>
+                </li>
+            </ol>
+        </div>
+
+        <!-- Contact Information -->
+        <div class="bg-blue-50 rounded-xl p-6 mb-8 border-l-4 border-blue-500">
+            <h3 class="font-bold text-gray-800 mb-4 flex items-center space-x-2">
+                <i class="fas fa-phone text-blue-600"></i>
+                <span>Contact Administration</span>
+            </h3>
+            <div class="space-y-3 text-gray-700">
+                <p class="flex items-center space-x-3">
+                    <i class="fas fa-phone text-blue-600"></i>
+                    <span>+27 13 516 0030</span>
+                </p>
+                <p class="flex items-center space-x-3">
+                    <i class="fas fa-envelope text-blue-600"></i>
+                    <span>info@matricsecondchance</span>
+                </p>
+                <p class="flex items-center space-x-3">
+                    <i class="fas fa-map-marker-alt text-blue-600"></i>
+                    <span>10 Henshall Street, Nelspruit</span>
+                </p>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <button onclick="logout()" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-3 px-6 rounded-lg transition-all duration-200 flex items-center justify-center space-x-2">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Logout</span>
+            </button>
+            <button onclick="refreshPage()" class="bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white font-bold py-3 px-6 rounded-lg transition-all duration-200 flex items-center justify-center space-x-2">
+                <i class="fas fa-sync-alt"></i>
+                <span>Refresh</span>
+            </button>
+        </div>
+
+        <!-- Footer -->
+        <div class="text-center mt-10 pt-6 border-t border-gray-200">
+            <p class="footer-text text-sm">
+                © 2026 EHLANZENI STAR SCHOOL. All rights reserved.
+            </p>
+        </div>
+    </div>
+
+    <script type="module">
+        import { auth, database } from '../scripts/firebase.js';
+        import { onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
+        import { ref, get } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js';
+
+        // Load student information on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            onAuthStateChanged(auth, async (user) => {
+                if (!user) {
+                    window.location.href = '../landing/login.html';
+                    return;
+                }
+
+                try {
+                    const pendingRef = ref(database, `application/pending/${user.uid}`);
+                    const pendingSnap = await get(pendingRef);
+
+                    if (pendingSnap.exists()) {
+                        const applicationData = pendingSnap.val();
+                        
+                        // Update student name and code
+                        document.getElementById('student-name').textContent = 
+                            `${applicationData.firstName} ${applicationData.lastName}`;
+                        document.getElementById('student-code').textContent = 
+                            applicationData.studentCode || 'N/A';
+
+                        // Format and display current month
+                        if (applicationData.monthlyPayment && applicationData.monthlyPayment.month) {
+                            const [year, month] = applicationData.monthlyPayment.month.split('-');
+                            const date = new Date(year, parseInt(month) - 1);
+                            const monthName = date.toLocaleString('en-ZA', { month: 'long', year: 'numeric' });
+                            document.getElementById('current-month').textContent = monthName;
+                        } else {
+                            document.getElementById('current-month').textContent = 'Current Month';
+                        }
+                    }
+                } catch (error) {
+                    console.error('Error loading student data:', error);
+                }
+            });
+        });
+
+        // Global functions for buttons
+        window.logout = async function() {
+            try {
+                await signOut(auth);
+                window.location.href = '../landing/login.html';
+            } catch (error) {
+                console.error('Logout error:', error);
+                alert('Error logging out. Please try again.');
+            }
+        };
+
+        window.refreshPage = function() {
+            location.reload();
+        };
+    </script>
+</body>
+
+</html>

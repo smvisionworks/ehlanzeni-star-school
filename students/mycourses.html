@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Courses - Ehlanzeni Star School</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/students/mycourses.css">
+    <link rel="stylesheet" href="/css/logout-modal.css">
+    <link rel="shortcut icon" href="/src/images/LOGO1.png" type="image/x-icon">
+</head>
+
+<body>
+    <div class="sidebar">
+        <div>
+            <!-- Updated Profile Area with Educational Symbol -->
+            <div class="profile">
+                <div class="profile-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h3 id="studentName">Loading...</h3>
+                <p>Student</p>
+            </div>
+
+            <!-- Updated Navigation Links (Messages removed, increased spacing) -->
+            <div class="nav-links">
+                <a href="studentdashboard.html"><i class="fas fa-home"></i> Dashboard</a>
+                <a href="mycourses.html" class="active"><i class="fas fa-book"></i> My Courses</a>
+                <a href="grades.html"><i class="fas fa-graduation-cap"></i> Grades</a>
+                <a href="calendar.html"><i class="fas fa-calendar-alt"></i> Calendar</a>
+                <a href="resources.html"><i class="fas fa-folder"></i> Resources</a>
+            </div>
+        </div>
+
+        <!-- Logout Button (Higher position ensured by structure) -->
+        <div class="logout">
+            <button class="logout-btn" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</button>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <h1>My Courses</h1>
+        <div class="courses" id="coursesContainer"></div>
+        <div id="loading" class="loading">
+            <div class="loading-circle"></div>
+        </div>
+        <footer>
+            © 2026 EHLANZENI STAR SCHOOL<br>
+            Powered by SM VisionWorks
+            <div>© 2026 EHLANZENI STAR SCHOOL. All rights reserved.</div>
+            <div class="powered">Developed by <a href="https://smvisionworks.com" target="_blank" style="color: #60a5fa; text-decoration: none;" onmouseover="this.style.textDecoration='underline';" onmouseout="this.style.textDecoration='none';">SM VISION WORKS</a></div>
+        </footer>
+    </div>
+
+    <div id="toast" class="toast"></div>
+
+    <!-- Logout Confirmation Modal -->
+    <div id="logoutModal" class="modal">
+        <div class="modal-content">
+            <button class="close-button">&times;</button>
+            <h3>Confirm Logout</h3>
+            <p>Are you sure you want to log out of Ehlanzeni Star School?</p>
+            <div class="modal-buttons">
+                <button class="cancel-btn" id="cancelLogoutBtn">Cancel</button>
+                <button class="confirm-btn" id="confirmLogoutBtn">Logout</button>
+            </div>
+        </div>
+    </div>
+
+
+    <script type="module" src="/scripts/students/mycourses-firebase.js"></script>
+    <script src="/scripts/logout.js"></script>
+
+      <script>
+        
+/* Small toggle script for pure-CSS responsive sidebar */
+(function(){
+  // create burger button and overlay only on mobile-capable screens
+  const burger = document.createElement('button');
+  burger.className = 'mobile-burger';
+  burger.setAttribute('aria-label','Open menu');
+  burger.innerHTML = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>';
+  document.body.insertAdjacentElement('afterbegin', burger);
+
+  const overlay = document.createElement('div');
+  overlay.className = 'sidebar-overlay';
+  document.body.appendChild(overlay);
+
+  const sidebar = document.querySelector('.sidebar');
+
+  if(!sidebar) return;
+
+  function open() {
+    sidebar.classList.add('open');
+    overlay.classList.add('show');
+    burger.setAttribute('aria-expanded','true');
+  }
+  function close() {
+    sidebar.classList.remove('open');
+    overlay.classList.remove('show');
+    burger.setAttribute('aria-expanded','false');
+  }
+
+  burger.addEventListener('click', function(){
+    if (sidebar.classList.contains('open')) close(); else open();
+  });
+  overlay.addEventListener('click', close);
+
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape') close();
+  });
+
+  // ensure consistent state on resize
+  window.addEventListener('resize', function(){
+    if (window.innerWidth >= 768) {
+      sidebar.classList.remove('open');
+      overlay.classList.remove('show');
+      burger.setAttribute('aria-expanded','false');
+    }
+  });
+})();
+</script>
+</body>
+
+</html>

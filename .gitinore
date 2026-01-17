@@ -1,0 +1,12 @@
+# Secrets
+*.json
+serviceAccountKey.json
+firebase-key.json
+.env
+
+# Node
+node_modules/
+
+# Builds
+dist/
+build/

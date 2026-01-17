@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Teacher Calendar</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <link rel="stylesheet" href="/css/teachers/teachercalender.css">
+    <link rel="stylesheet" href="/css/logout-modal.css">
+    <link rel="shortcut icon" href="/src/images/LOGO1.png" type="image/x-icon">
+</head>
+
+<body>
+    <div class="sidebar">
+        <div>
+            <div class="profile">
+                <div class="symbol">🎓</div>
+                <h3 id="teacherName">Loading...</h3>
+                <p>Teacher</p>
+            </div>
+            <div class="nav-links">
+                <a href="/teachers/teacherdashboard.html" class="active"><i class="fas fa-home"></i> Dashboard</a>
+                <a href="/teachers/myclasses.html"><i class="fas fa-users"></i> My Classes</a>
+                <a href="/teachers/teacherresources.html"><i class="fas fa-folder"></i> Resources</a>
+                <a href="/teachers/teachercalendar.html"><i class="fas fa-calendar-alt"></i> Calendar</a>
+            </div>
+        </div>
+        <div class="logout">
+            <button class="logout-btn" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</button>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="events-container">
+            <h3 class="text-lg font-semibold text-blue-900 mb-4">Upcoming Class Sessions</h3>
+            <div id="eventsList"></div>
+            <div id="loading" class="loading"><i class="fas fa-spinner"></i> Loading events...</div>
+        </div>
+        <h1 class="text-3xl font-bold text-blue-900 mb-8">Class Schedule Calendar</h1>
+        <div class="calendar-form">
+            <h2 class="text-xl font-semibold text-blue-900 mb-6">Add Class Session</h2>
+            <label for="title" class="block text-sm font-medium text-gray-700 mb-2">Class Title</label>
+            <input type="text" id="title" placeholder="e.g., Grade 10 Biology" required
+                class="border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+            <label for="date" class="block text-sm font-medium text-gray-700 mb-2">Date</label>
+            <input type="date" id="date" required
+                class="border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+            <label class="block text-sm font-medium text-gray-700 mb-2">Time</label>
+            <div class="time-group">
+                <input type="time" id="startTime" placeholder="Start Time" required
+                    class="border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                <input type="time" id="endTime" placeholder="End Time" required
+                    class="border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+            </div>
+            <label for="notes" class="block text-sm font-medium text-gray-700 mb-2">Notes</label>
+            <textarea rows="4" id="notes" placeholder="Add notes or instructions..." required
+                class="border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+            <label for="courseId" class="block text-sm font-medium text-gray-700 mb-2">Subject</label>
+            <select id="courseId" required
+                class="border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <option value="">Select a subject</option>
+            </select>
+            <label for="joinLink" class="block text-sm font-medium text-gray-700 mb-2">Join Link : For online classes.</label>
+            <input type="url" id="joinLink" placeholder="e.g., https://meet.google.com/xxx-yyy-zzz" required
+                class="border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+            <button id="addEventBtn" class="mt-4">Add to Calendar</button>
+        </div>
+        
+    </div>
+
+    <div id="logoutModal" class="modal">
+        <div class="modal-content">
+            <button class="close-button">&times;</button>
+            <h3>Confirm Logout</h3>
+            <p>Are you sure you want to log out of Ehlanzeni Star School?</p>
+            <div class="modal-buttons">
+                <button class="cancel-btn" id="cancelLogoutBtn">Cancel</button>
+                <button class="confirm-btn" id="confirmLogoutBtn">Logout</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast" class="toast"></div>
+
+
+    <script type="module" src="/scripts/teachers/teacher-calendar.js"></script>
+    <script src="/scripts/logout.js"></script>
+
+
+</body>
+
+</html>

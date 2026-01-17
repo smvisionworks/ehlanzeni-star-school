@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Teacher Registration - Ehlanzeni Star School</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="shortcut icon" href="/src/images/LOGO1.png" type="image/x-icon">
+  <style>
+    .subject-checkbox:checked+label {
+      background-color: #3b82f6;
+      color: white;
+      border-color: #3b82f6;
+    }
+
+    .toast {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 12px 20px;
+      border-radius: 4px;
+      color: white;
+      z-index: 1000;
+      display: none;
+    }
+
+    .toast.success {
+      background-color: #10b981;
+    }
+
+    .toast.error {
+      background-color: #ef4444;
+    }
+
+    .toast.info {
+      background-color: #3b82f6;
+    }
+  </style>
+</head>
+
+<body class="bg-gray-50">
+
+  <header class="bg-white shadow fixed top-0 left-0 w-full z-50 
+    flex flex-col  md:flex-row md:justify-between md:items-center 
+    px-4 md:px-10 py-4 md:py-5 gap-3 md:gap-6 text-center md:text-left">
+
+    <!-- LOGO + TITLE -->
+    <div class="flex items-center justify-center md:justify-start gap-3">
+      <h2 class="text-lg md:text-xl font-bold text-blue-900 border-b-2 border-[#1e90ff] inline-block pb-[5px]">
+        EHLANZENI STAR SCHOOL
+      </h2>
+    </div>
+
+    <!-- NAV (always horizontal) -->
+    <nav class="flex flex-row flex-wrap justify-center md:justify-end gap-3 md:gap-6 w-full md:w-auto">
+      <a href="/index.html" class="bg-green-700 text-white px-3 py-1.5 md:px-4 md:py-2 rounded 
+              hover:bg-blue-800 font-medium text-sm md:text-base">
+        HOME
+      </a>
+
+      <a href="/landing/login.html" class="bg-blue-700 text-white px-3 py-1.5 md:px-4 md:py-2 rounded 
+              hover:bg-blue-800 font-medium text-sm md:text-base">
+        LOGIN
+      </a>
+    </nav>
+  </header>
+
+
+  <section class="bg-blue-900 text-white py-12 mt-20">
+    <div class="container mx-auto px-4 text-center">
+      <h1 class="text-4xl font-bold mb-4">Teacher Registration</h1>
+      <p class="text-xl">Join our team of dedicated educators</p>
+    </div>
+  </section>
+
+  <div class="container mx-auto px-4 py-8">
+    <form id="teacherForm" class="bg-white rounded-lg shadow-md p-6 max-w-4xl mx-auto">
+      <!-- Personal Information -->
+      <div class="mb-8">
+        <h2 class="text-2xl font-bold text-blue-900 mb-4 border-b pb-2">Personal Information</h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+          <div>
+            <label class="block text-gray-700 mb-2">First Name *</label>
+            <input type="text" id="firstName"
+              class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+          </div>
+          <div>
+            <label class="block text-gray-700 mb-2">Last Name *</label>
+            <input type="text" id="lastName"
+              class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+          <div>
+            <label class="block text-gray-700 mb-2">ID Number *</label>
+            <input type="text" id="idNumber"
+              class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+          </div>
+          <div>
+            <label class="block text-gray-700 mb-2">Race *</label>
+            <input type="text" id="race"
+              class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <label class="block text-gray-700 mb-2">Email *</label>
+          <input type="email" id="email"
+            class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+        </div>
+
+        <div class="mb-4">
+          <label class="block text-gray-700 mb-2">Phone *</label>
+          <input type="tel" id="phone" placeholder="071 123 4567"
+            class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+          <div>
+            <label class="block text-gray-700 mb-2">Create Password *</label>
+            <input type="password" id="password"
+              class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+          </div>
+          <div>
+            <label class="block text-gray-700 mb-2">Confirm Password *</label>
+            <input type="password" id="confirmPassword"
+              class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <label class="block text-gray-700 mb-2">Address *</label>
+          <input type="text" id="addressLine1" placeholder="Address Line 1"
+            class="w-full px-4 py-2 border rounded mb-2 focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+          <input type="text" id="addressLine2" placeholder="Address Line 2"
+            class="w-full px-4 py-2 border rounded mb-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-2 mb-2">
+            <input type="text" id="city" placeholder="City"
+              class="px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+            <input type="text" id="province" placeholder="State / Province / Region"
+              class="px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+            <input type="text" id="postalCode" placeholder="Postal Code"
+              class="px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+            <select id="country" class="px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+              <option>South Africa</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Teaching Information -->
+      <div class="mb-8">
+        <h2 class="text-2xl font-bold text-blue-900 mb-4 border-b pb-2">Teaching Information</h2>
+
+        <div class="mb-4">
+          <label class="block text-gray-700 mb-2">Highest Qualification *</label>
+          <select id="highestQualification"
+            class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+            <option value="">Select Qualification</option>
+            <option>Matric</option>
+            <option>Diploma</option>
+            <option>Bachelor's Degree</option>
+            <option>Honours Degree</option>
+            <option>Master's Degree</option>
+            <option>Doctorate</option>
+            <option>Other</option>
+          </select>
+        </div>
+
+        <div class="mb-4">
+          <label class="block text-gray-700 mb-2">Field of Study *</label>
+          <input type="text" id="fieldOfStudy"
+            class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+        </div>
+
+        <div class="mb-4">
+          <label class="block text-gray-700 mb-2">Years of Teaching Experience *</label>
+          <select id="yearsExperience"
+            class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+            <option value="">Select Experience</option>
+            <option>0-2 years</option>
+            <option>3-5 years</option>
+            <option>6-10 years</option>
+            <option>11-15 years</option>
+            <option>16+ years</option>
+          </select>
+        </div>
+
+        <div class="mb-4">
+          <label class="block text-gray-700 mb-2">Subjects You Teach *</label>
+          <p class="text-sm text-gray-500 mb-2">Select all subjects you are qualified to teach</p>
+          <div class="grid grid-cols-2 md:grid-cols-3 gap-2">
+            <!-- Languages -->
+            <div class="flex items-center">
+              <input type="checkbox" id="subject-english" class="subject-checkbox hidden" value="English">
+              <label for="subject-english"
+                class="w-full px-3 py-2 border rounded cursor-pointer text-center hover:bg-blue-50">English</label>
+            </div>
+            <div class="flex items-center">
+              <input type="checkbox" id="subject-afrikaans" class="subject-checkbox hidden" value="Afrikaans">
+              <label for="subject-afrikaans"
+                class="w-full px-3 py-2 border rounded cursor-pointer text-center hover:bg-blue-50">Afrikaans</label>
+            </div>
+            <div class="flex items-center">
+              <input type="checkbox" id="subject-isizulu" class="subject-checkbox hidden" value="IsiZulu">
+              <label for="subject-isizulu"
+                class="w-full px-3 py-2 border rounded cursor-pointer text-center hover:bg-blue-50">IsiZulu</label>
+            </div>
+
+            <!-- Mathematics -->
+            <div class="flex items-center">
+              <input type="checkbox" id="subject-maths" class="subject-checkbox hidden" value="Mathematics">
+              <label for="subject-maths"
+                class="w-full px-3 py-2 border rounded cursor-pointer text-center hover:bg-blue-50">Mathematics</label>
+            </div>
+            <div class="flex items-center">
+              <input type="checkbox" id="subject-maths-literacy" class="subject-checkbox hidden"
+                value="Mathematical Literacy">
+              <label for="subject-maths-literacy"
+                class="w-full px-3 py-2 border rounded cursor-pointer text-center hover:bg-blue-50">Maths
+                Literacy</label>
+            </div>
+
+            <!-- Sciences -->
+            <div class="flex items-center">
+              <input type="checkbox" id="subject-physics" class="subject-checkbox hidden" value="Physical Sciences">
+              <label for="subject-physics"
+                class="w-full px-3 py-2 border rounded cursor-pointer text-center hover:bg-blue-50">Physical
+                Sciences</label>
+            </div>
+            <div class="flex items-center">
+              <input type="checkbox" id="subject-chemistry" class="subject-checkbox hidden" value="Chemistry">
+              <label for="subject-chemistry"
+                class="w-full px-3 py-2 border rounded cursor-pointer text-center hover:bg-blue-50">Chemistry</label>
+            </div>
+            <div class="flex items-center">
+              <input type="checkbox" id="subject-biology" class="subject-checkbox hidden" value="Life Sciences">
+              <label for="subject-biology"
+                class="w-full px-3 py-2 border rounded cursor-pointer text-center hover:bg-blue-50">Life
+                Sciences</label>
+            </div>
+
+            <!-- Social Sciences -->
+            <div class="flex items-center">
+              <input type="checkbox" id="subject-geography" class="subject-checkbox hidden" value="Geography">
+              <label for="subject-geography"
+                class="w-full px-3 py-2 border rounded cursor-pointer text-center hover:bg-blue-50">Geography</label>
+            </div>
+            <div class="flex items-center">
+              <input type="checkbox" id="subject-history" class="subject-checkbox hidden" value="History">
+              <label for="subject-history"
+                class="w-full px-3 py-2 border rounded cursor-pointer text-center hover:bg-blue-50">History</label>
+            </div>
+            <div class="flex items-center">
+              <input type="checkbox" id="subject-economics" class="subject-checkbox hidden" value="Economics">
+              <label for="subject-economics"
+                class="w-full px-3 py-2 border rounded cursor-pointer text-center hover:bg-blue-50">Economics</label>
+            </div>
+
+            <!-- Business & Technology -->
+            <div class="flex items-center">
+              <input type="checkbox" id="subject-accounting" class="subject-checkbox hidden" value="Accounting">
+              <label for="subject-accounting"
+                class="w-full px-3 py-2 border rounded cursor-pointer text-center hover:bg-blue-50">Accounting</label>
+            </div>
+            <div class="flex items-center">
+              <input type="checkbox" id="subject-business" class="subject-checkbox hidden" value="Business Studies">
+              <label for="subject-business"
+                class="w-full px-3 py-2 border rounded cursor-pointer text-center hover:bg-blue-50">Business
+                Studies</label>
+            </div>
+            <div class="flex items-center">
+              <input type="checkbox" id="subject-computer" class="subject-checkbox hidden"
+                value="Computer Applications Technology">
+              <label for="subject-computer"
+                class="w-full px-3 py-2 border rounded cursor-pointer text-center hover:bg-blue-50">Computer
+                Applications</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <label class="block text-gray-700 mb-2">Additional Subjects (if not listed)</label>
+          <input type="text" id="additionalSubjects" placeholder="List any additional subjects separated by commas"
+            class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+        </div>
+
+        <div class="mb-4">
+          <label class="block text-gray-700 mb-2">Preferred Teaching Level *</label>
+          <div class="flex flex-wrap gap-2">
+            <label class="inline-flex items-center">
+              <input type="checkbox" class="form-checkbox" name="teachingLevel" value="Grade 10">
+              <span class="ml-2">Grade 10</span>
+            </label>
+            <label class="inline-flex items-center">
+              <input type="checkbox" class="form-checkbox" name="teachingLevel" value="Grade 11">
+              <span class="ml-2">Grade 11</span>
+            </label>
+            <label class="inline-flex items-center">
+              <input type="checkbox" class="form-checkbox" name="teachingLevel" value="Grade 12">
+              <span class="ml-2">Grade 12</span>
+            </label>
+            <label class="inline-flex items-center">
+              <input type="checkbox" class="form-checkbox" name="teachingLevel" value="All Grades">
+              <span class="ml-2">All Grades</span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Availability -->
+      <div class="mb-8">
+        <h2 class="text-2xl font-bold text-blue-900 mb-4 border-b pb-2">Availability</h2>
+
+        <div class="mb-4">
+          <label class="block text-gray-700 mb-2">Preferred Teaching Schedule *</label>
+          <select id="preferredSchedule"
+            class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+            <option value="">Select Schedule</option>
+            <option>Full Time (Mon-Fri, 8:00-15:00)</option>
+            <option>Part Time (Mon-Fri, 16:00-19:00)</option>
+            <option>Saturday Only (8:00-14:00)</option>
+            <option>Online Teaching Only</option>
+            <option>Flexible (Mix of in-person and online)</option>
+          </select>
+        </div>
+
+        <div class="mb-4">
+          <label class="block text-gray-700 mb-2">Available Start Date *</label>
+          <input type="date" id="availableStartDate"
+            class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+        </div>
+      </div>
+
+      <!-- Documents -->
+      <div class="mb-8">
+        <h2 class="text-2xl font-bold text-blue-900 mb-4 border-b pb-2">Required Documents</h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+          <div>
+            <label class="block text-gray-700 mb-2">Upload Certified ID Copy *</label>
+            <input type="file" id="idCopy" accept=".pdf,.jpg,.jpeg,.png"
+              class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+          </div>
+          <div>
+            <label class="block text-gray-700 mb-2">Upload Qualifications *</label>
+            <input type="file" id="qualifications" accept=".pdf,.jpg,.jpeg,.png"
+              class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <label class="block text-gray-700 mb-2">Upload CV/Resume *</label>
+          <input type="file" id="cv" accept=".pdf,.doc,.docx"
+            class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+        </div>
+      </div>
+
+      <!-- Declaration -->
+      <div class="mb-8">
+        <h2 class="text-2xl font-bold text-blue-900 mb-4 border-b pb-2">Declaration</h2>
+
+        <div class="mb-4">
+          <label class="block text-gray-700 mb-2">Full Name *</label>
+          <input type="text" id="declarationName" placeholder="Your full name"
+            class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+        </div>
+
+        <div class="mb-4">
+          <label class="block text-gray-700 mb-2">Date *</label>
+          <input type="date" id="declarationDate"
+            class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+        </div>
+
+        <div class="mb-4">
+          <label class="inline-flex items-center">
+            <input type="checkbox" id="declarationAgreement" class="form-checkbox" required>
+            <span class="ml-2">I hereby declare that the information provided is true and correct to the best of my
+              knowledge. *</span>
+          </label>
+        </div>
+      </div>
+
+      <button type="submit"
+        class="w-full bg-blue-700 text-white py-3 px-4 rounded font-bold text-lg hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-200">
+        Submit Application
+      </button>
+    </form>
+  </div>
+
+  <div class="container mx-auto px-4 py-8 text-center">
+    <a href="index.html" class="text-blue-700 hover:text-blue-900 font-medium inline-flex items-center">
+      <i class="fas fa-arrow-left mr-2"></i> Back to Home
+    </a>
+  </div>
+
+  <footer class="relative bg-blue-900 text-white py-10 overflow-hidden">
+    <!-- Aesthetic Background Pattern -->
+    <div class="absolute inset-0 z-0 opacity-10 pointer-events-none">
+        <img src="/src/images/logo1.png" alt="" class="w-full h-full object-cover object-center scale-150 blur-sm grayscale">
+    </div>
+    <div class="absolute inset-0 z-0 bg-gradient-to-b from-blue-900/95 to-blue-900/90 pointer-events-none"></div>
+
+    <div class="container mx-auto px-4 text-center relative z-10">
+      
+      <!-- Social Media -->
+      <div class="flex justify-center space-x-8 mb-8">
+        <a href="https://www.facebook.com/ehlanzenistarschool" target="_blank" class="text-blue-300 hover:text-white transition-transform transform hover:scale-110 duration-300">
+          <i class="fab fa-facebook-f text-3xl"></i>
+        </a>
+        <a href="https://wa.me/27822672815" target="_blank" class="text-blue-300 hover:text-white transition-transform transform hover:scale-110 duration-300">
+          <i class="fab fa-whatsapp text-3xl"></i>
+        </a>
+      </div>
+
+      <!-- Quick Links -->
+      <div class="flex flex-wrap justify-center gap-4 md:gap-8 mb-8 text-sm font-medium text-blue-200">
+        <a href="/index.html" class="hover:text-white transition-colors duration-300">Home</a>
+        <a href="/landing/programs.html" class="hover:text-white transition-colors duration-300">Programs</a>
+        <a href="/landing/admissions.html" class="hover:text-white transition-colors duration-300">Admissions</a>
+        <a href="/landing/contact.html" class="hover:text-white transition-colors duration-300">Contact</a>
+        <a href="/landing/privacy.html" class="hover:text-white transition-colors duration-300">Privacy Policy</a>
+      </div>
+
+      <!-- Contact Info -->
+      <div class="flex flex-col md:flex-row justify-center items-center gap-4 md:gap-8 mb-8 text-blue-200">
+        <a href="mailto:info@matricsecondchance" class="flex items-center hover:text-white transition-colors duration-300 group">
+            <i class="fas fa-envelope mr-2 group-hover:text-blue-400"></i>
+            <span>info@matricsecondchance</span>
+        </a>
+        <span class="hidden md:inline text-blue-700">•</span>
+        <a href="tel:+27135160030" class="flex items-center hover:text-white transition-colors duration-300 group">
+            <i class="fas fa-phone-alt mr-2 group-hover:text-green-400"></i>
+            <span>+27 13 516 0030</span>
+        </a>
+        <span class="hidden md:inline text-blue-700">•</span>
+        <div class="flex items-center hover:text-white transition-colors duration-300 group cursor-default">
+            <i class="fas fa-map-marker-alt mr-2 group-hover:text-red-400"></i>
+            <span>10 Henshall Street, Nelspruit</span>
+        </div>
+      </div>
+
+      <!-- Divider -->
+      <div class="border-t border-blue-800 my-6 w-2/3 mx-auto"></div>
+
+      <!-- Copyright & Dev -->
+      <div class="text-sm text-blue-400 space-y-2">
+        <div>© 2026 EHLANZENI STAR SCHOOL. All rights reserved.</div>
+        <div class="text-xs">
+            Developed by <a href="https://smvisionworks.com" target="_blank" class="text-blue-300 hover:text-white font-semibold transition-colors duration-300">SM VISION WORKS</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <div id="toast" class="toast"></div>
+
+  <script type="module" src="/scripts/teachers/teacher-apply.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Resources - Ehlanzeni Star School</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="stylesheet" href="/css/students/resources.css">
+  <link rel="stylesheet" href="/css/logout-modal.css">
+  <link rel="shortcut icon" href="/src/images/LOGO1.png" type="image/x-icon">
+</head>
+<body>
+  <div class="sidebar">
+    <div>
+      <div class="profile">
+        <div class="profile-icon">
+          <i class="fas fa-graduation-cap"></i>
+        </div>
+        <h3 id="studentName">Loading...</h3>
+        <p>Student</p>
+      </div>
+      <div class="nav-links">
+        <a href="studentdashboard.html"><i class="fas fa-home"></i> Dashboard</a>
+        <a href="mycourses.html"><i class="fas fa-book"></i> My Courses</a>
+        <a href="grades.html"><i class="fas fa-graduation-cap"></i> Grades</a>
+        <a href="calendar.html"><i class="fas fa-calendar-alt"></i> Calendar</a>
+        <a href="resources.html" class="active"><i class="fas fa-folder"></i> Resources</a>
+      </div>
+    </div>
+    <div class="logout">
+      <button class="logout-btn" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</button>
+    </div>
+  </div>
+
+  <div class="main-content">
+
+    
+    <h1>Learning Resources</h1>
+
+    <div class="filter-section">
+      
+      <div class="course-filter">
+        <label for="courseFilter"><i class="fas fa-book"></i> Filter by Course:</label>
+        <select id="courseFilter">
+          <option value="all">All Courses</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Main Content Area -->
+    <div class="content-area">
+      <!-- Courses Section -->
+      <div class="courses-section">
+        <div class="section-header">
+          <h2><i class="fas fa-book-open"></i> My Courses</h2>
+          <p class="section-description">Click on any course to view resources</p>
+        </div>
+        <div class="courses-grid" id="coursesGrid">
+          <!-- Courses will be populated here -->
+        </div>
+      </div>
+
+      <!-- Resources Sidebar -->
+      <div class="resources-sidebar" id="resourcesSidebar">
+        <div class="sidebar-header">
+          <h3 id="sidebarCourseTitle">Course Resources</h3>
+          <button class="close-sidebar" id="closeSidebar">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <div class="sidebar-content">
+          <div class="resource-count" id="resourceCount">
+            <i class="fas fa-file-alt"></i>
+            <span>0 resources available</span>
+          </div>
+          
+          <!-- Assignments Section -->
+          <div class="resource-section" id="assignmentsSection">
+            <h4 class="section-title">Assignments</h4>
+            <div class="resources-list" id="assignmentsList"></div>
+          </div>
+
+          <!-- Course Materials Section -->
+          <div class="resource-section" id="materialsSection">
+            <h4 class="section-title">Course Materials</h4>
+            <div class="resources-list" id="resourcesList">
+              <!-- General resources will be populated here -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <div>© 2026 EHLANZENI STAR SCHOOL. All rights reserved.</div>
+      <div class="powered">Developed by <a href="https://smvisionworks.com" target="_blank" style="color: #60a5fa; text-decoration: none;" onmouseover="this.style.textDecoration='underline';" onmouseout="this.style.textDecoration='none';">SM VISION WORKS</a></div>
+    </footer>
+  </div>
+
+  <!-- Resource Modal -->
+<div id="resourceModal" class="modal">
+  <div class="modal-content">
+    <button class="close-button" onclick="closeModal()">&times;</button>
+    <div class="modal-header">
+      <h3 id="resourceTitle"></h3>
+    </div>
+    <div class="modal-body">
+      <div class="modal-info">
+        <p><strong>Course:</strong> <span id="resourceCourse"></span></p>
+        <p><strong>Teacher:</strong> <span id="resourceTeacher"></span></p>
+        <p><strong>Type:</strong> <span id="resourceType"></span></p>
+        <p><strong>Uploaded:</strong> <span id="resourceDate"></span></p>
+        <p><strong>File Size:</strong> <span id="resourceSize"></span></p>
+      </div>
+      <div class="modal-description">
+        <h4>Description</h4>
+        <p id="resourceDescription"></p>
+      </div>
+      <div class="modal-actions">
+        <!-- REMOVED target="_blank" FROM THIS LINE -->
+        <a id="resourceLink" href="#" class="download-btn">
+          <i class="fas fa-download"></i> Download Resource
+        </a>
+        <button onclick="closeModal()" class="close-modal-btn">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <!-- Logout Modal -->
+  <div id="logoutModal" class="modal">
+      <div class="modal-content">
+          <button class="close-button">&times;</button>
+          <h3>Confirm Logout</h3>
+          <p>Are you sure you want to log out of Ehlanzeni Star School?</p>
+          <div class="modal-buttons">
+              <button class="cancel-btn" id="cancelLogoutBtn">Cancel</button>
+              <button class="confirm-btn" id="confirmLogoutBtn">Logout</button>
+          </div>
+      </div>
+  </div>
+
+  <div id="toast" class="toast"></div>
+
+  <script type="module" src="/scripts/students/resources-firebase.js"></script>
+  <script src="/scripts/logout.js"></script>
+  
+ <script>
+        
+/* Small toggle script for pure-CSS responsive sidebar */
+(function(){
+  // create burger button and overlay only on mobile-capable screens
+  const burger = document.createElement('button');
+  burger.className = 'mobile-burger';
+  burger.setAttribute('aria-label','Open menu');
+  burger.innerHTML = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>';
+  document.body.insertAdjacentElement('afterbegin', burger);
+
+  const overlay = document.createElement('div');
+  overlay.className = 'sidebar-overlay';
+  document.body.appendChild(overlay);
+
+  const sidebar = document.querySelector('.sidebar');
+
+  if(!sidebar) return;
+
+  function open() {
+    sidebar.classList.add('open');
+    overlay.classList.add('show');
+    burger.setAttribute('aria-expanded','true');
+  }
+  function close() {
+    sidebar.classList.remove('open');
+    overlay.classList.remove('show');
+    burger.setAttribute('aria-expanded','false');
+  }
+
+  burger.addEventListener('click', function(){
+    if (sidebar.classList.contains('open')) close(); else open();
+  });
+  overlay.addEventListener('click', close);
+
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape') close();
+  });
+
+  // ensure consistent state on resize
+  window.addEventListener('resize', function(){
+    if (window.innerWidth >= 768) {
+      sidebar.classList.remove('open');
+      overlay.classList.remove('show');
+      burger.setAttribute('aria-expanded','false');
+    }
+  });
+})();
+</script>
+</body>
+</html>
