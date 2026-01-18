@@ -7,6 +7,7 @@
     <title>Student Dashboard - Ehlanzeni Star School</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="student-dasboard.css">
     <script type="module" src="../scripts/dashboard.js"></script>
     <script>
         tailwind.config = {
@@ -23,115 +24,23 @@
             }
         }
     </script>
-    <style>
-        .gradient-bg {
-            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
-        }
 
-        .sidebar-gradient {
-            background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
-        }
-
-        .status-badge {
-            @apply px-3 py-1 rounded-full text-sm font-semibold;
-        }
-
-        .status-pending {
-            @apply bg-yellow-100 text-yellow-800;
-        }
-
-        .status-approved {
-            @apply bg-green-100 text-green-800;
-        }
-
-        .status-rejected {
-            @apply bg-red-100 text-red-800;
-        }
-
-        .timeline-dot {
-            @apply absolute w-4 h-4 rounded-full border-4 border-white;
-        }
-
-        .timeline-item.completed .timeline-dot {
-            @apply bg-green-500;
-        }
-
-        .timeline-item.current .timeline-dot {
-            @apply bg-blue-500 animate-pulse;
-            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.2);
-        }
-
-        .timeline-item.pending .timeline-dot {
-            @apply bg-gray-300;
-        }
-
-        .form-group {
-            @apply mb-6;
-        }
-
-        .form-group label {
-            @apply block text-sm font-medium text-gray-700 mb-2;
-        }
-
-        .form-group input,
-        .form-group select,
-        .form-group textarea {
-            @apply w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200;
-        }
-
-        .form-group input:read-only {
-            @apply bg-gray-50 text-gray-500 cursor-not-allowed;
-        }
-
-        .tab-content {
-            display: none;
-        }
-
-        .tab-content.active {
-            display: block;
-            animation: fadeIn 0.5s ease-in-out;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .toast {
-            @apply fixed top-6 right-6 px-6 py-4 rounded-lg shadow-lg text-white font-medium z-50 transform transition-all duration-300;
-            display: none;
-        }
-
-        .toast.success {
-            @apply bg-green-500;
-        }
-
-        .toast.error {
-            @apply bg-red-500;
-        }
-
-        .toast.info {
-            @apply bg-blue-500;
-        }
-    </style>
 </head>
 
 <body class="bg-gray-50 min-h-screen">
     <!-- Header -->
-    <header class="gradient-bg text-white shadow-lg sticky top-0 z-40">
+    <header class="gradient-bg text-white shadow-lg sticky top-0 z-50">
+
         <div class="container mx-auto px-6 py-4">
             <div class="flex items-center justify-between">
                 <div class="flex items-center space-x-4">
-                    <img src="../src/images/logo1.png" alt="School Logo" class="h-12 w-12 rounded-lg shadow-md">
+                    <!-- add inside header, next to logo (visible only on small screens) -->
+                    <button id="sidebar-toggle" aria-label="Toggle menu"
+                        class="md:hidden inline-flex items-center justify-center p-2 rounded-md text-white bg-white/10 hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-white">
+                        <i class="fas fa-bars"></i>
+                    </button>
+
                     <div>
-                        <h1 class="text-2xl font-bold">EHLANZENI STAR SCHOOL</h1>
                         <p class="text-blue-100 text-sm">Student Portal</p>
                     </div>
                 </div>
@@ -146,65 +55,75 @@
         </div>
     </header>
 
-    <div class="flex min-h-screen">
-        <!-- Sidebar -->
-        <div class="sidebar-gradient text-white w-80 flex-shrink-0 shadow-xl">
-            <div class="p-6 border-b border-gray-700">
-                <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-6 shadow-lg">
-                    <div class="flex items-center space-x-4 mb-4">
-                        <div
-                            class="w-16 h-16 bg-gradient-to-br from-accent to-yellow-400 rounded-full flex items-center justify-center shadow-lg">
-                            <i class="fas fa-user-graduate text-2xl text-white"></i>
-                        </div>
-                        <div>
-                            <h3 id="student-name" class="font-bold text-lg truncate">Loading...</h3>
-                            <p class="text-gray-300 text-sm">Student</p>
-                        </div>
-                    </div>
-                    <div class="space-y-2">
-                        <p id="student-code" class="text-sm text-gray-300 flex items-center space-x-2">
-                            <i class="fas fa-id-card text-accent"></i>
-                            <span>Code: Loading...</span>
-                        </p>
-                        <p id="application-status"
-                            class="status-pending status-badge inline-flex items-center space-x-2">
-                            <i class="fas fa-clock"></i>
-                            <span>Loading...</span>
-                        </p>
-                    </div>
+    <div class="flex flex-col md:flex-row min-h-screen">
+       <!-- Sidebar -->
+<div id="sidebar" class="bg-white text-gray-800 w-80 flex-shrink-0 shadow-xl
+    fixed inset-y-0 left-0 z-50 transform -translate-x-full
+    transition-transform duration-300 ease-in-out
+    md:relative md:translate-x-0 md:h-screen md:overflow-hidden">
+
+    <div class="p-6 border-b border-gray-200">
+        <div class="bg-white/90 backdrop-blur-sm rounded-2xl p-6 shadow-lg">
+            <div class="flex items-center space-x-4 mb-4">
+                <div
+                    class="w-16 h-16 bg-gradient-to-br from-accent to-yellow-400 rounded-full flex items-center justify-center shadow-lg">
+                    <i class="fas fa-user-graduate text-2xl text-white"></i>
+                </div>
+                <div>
+                    <h3 id="student-name" class="font-bold text-lg truncate">Loading...</h3>
+                    <p class="text-gray-500 text-sm">Student</p>
                 </div>
             </div>
+            <div class="space-y-2">
+                <p id="student-code" class="text-sm text-gray-500 flex items-center space-x-2">
+                    <i class="fas fa-id-card text-accent"></i>
+                    <span>Code: Loading...</span>
+                </p>
+                <p id="application-status"
+                    class="status-pending status-badge inline-flex items-center space-x-2">
+                    <i class="fas fa-clock"></i>
+                    <span>Loading...</span>
+                </p>
+            </div>
+        </div>
+    </div>
 
-            <nav class="p-6 space-y-2">
-                <a href="#status"
-                    class="nav-item flex items-center space-x-4 p-4 rounded-xl bg-blue-600 text-white shadow-lg transition-all duration-200"
-                    data-tab="status">
-                    <i class="fas fa-tasks w-6 text-center"></i>
-                    <span>Application Status</span>
-                </a>
-                <a href="#profile"
-                    class="nav-item flex items-center space-x-4 p-4 rounded-xl text-gray-300 hover:bg-gray-700/50 hover:text-white transition-all duration-200"
-                    data-tab="profile">
-                    <i class="fas fa-user w-6 text-center"></i>
-                    <span>Personal Details</span>
-                </a>
-                <a href="#education"
-                    class="nav-item flex items-center space-x-4 p-4 rounded-xl text-gray-300 hover:bg-gray-700/50 hover:text-white transition-all duration-200"
-                    data-tab="education">
-                    <i class="fas fa-graduation-cap w-6 text-center"></i>
-                    <span>Education Details</span>
-                </a>
-                <a href="#guardian"
-                    class="nav-item flex items-center space-x-4 p-4 rounded-xl text-gray-300 hover:bg-gray-700/50 hover:text-white transition-all duration-200"
-                    data-tab="guardian">
-                    <i class="fas fa-users w-6 text-center"></i>
-                    <span>Guardian Details</span>
-                </a>
-            </nav>
+    <nav class="p-6 space-y-2">
+        <a href="#status"
+            class="nav-item flex items-center space-x-4 p-4 rounded-xl bg-blue-600 text-white shadow-lg transition-all duration-200"
+            data-tab="status">
+            <i class="fas fa-tasks w-6 text-center"></i>
+            <span>Application Status</span>
+        </a>
+        <a href="#profile"
+            class="nav-item flex items-center space-x-4 p-4 rounded-xl text-gray-700 hover:bg-gray-100 hover:text-blue-600 transition-all duration-200"
+            data-tab="profile">
+            <i class="fas fa-user w-6 text-center"></i>
+            <span>Personal Details</span>
+        </a>
+        <a href="#education"
+            class="nav-item flex items-center space-x-4 p-4 rounded-xl text-gray-700 hover:bg-gray-100 hover:text-blue-600 transition-all duration-200"
+            data-tab="education">
+            <i class="fas fa-graduation-cap w-6 text-center"></i>
+            <span>Education Details</span>
+        </a>
+        <a href="#guardian"
+            class="nav-item flex items-center space-x-4 p-4 rounded-xl text-gray-700 hover:bg-gray-100 hover:text-blue-600 transition-all duration-200"
+            data-tab="guardian">
+            <i class="fas fa-users w-6 text-center"></i>
+            <span>Guardian Details</span>
+        </a>
+    </nav>
+</div>
+
+
+        <!-- overlay shown on mobile when sidebar is open -->
+        <div id="sidebar-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden md:hidden" aria-hidden="true">
         </div>
 
         <!-- Main Content -->
-        <div class="flex-1 p-8 bg-gradient-to-br from-gray-50 to-blue-50">
+        <div class="flex-1 p-8 bg-gradient-to-br from-gray-50 to-blue-50 overflow-y-auto h-screen">
+
             <!-- Status Tab -->
             <div id="status-tab" class="tab-content active">
                 <div class="flex items-center justify-between mb-8">
@@ -536,10 +455,10 @@
                         <div>
                             <h3 class="text-xl font-semibold text-gray-800 mb-6 flex items-center space-x-3">
                                 <i class="fas fa-briefcase text-orange-500"></i>
-                                <span>Employment Information</span>
+                                <span>Additional Information</span>
                             </h3>
 
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="grid grid-cols-1 gap-6">
                                 <div class="form-group">
                                     <label>Employment Status *</label>
                                     <select id="edit-guardianEmploymentStatus" required class="w-full">
@@ -547,22 +466,23 @@
                                         <option>Employed</option>
                                         <option>Self-Employed</option>
                                         <option>Unemployed</option>
+                                        <option>Retired</option>
                                     </select>
                                 </div>
-                                <div class="form-group">
-                                    <label>Place of Employment</label>
-                                    <input type="text" id="edit-guardianWorkplace" class="w-full">
-                                </div>
-                            </div>
 
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div class="form-group">
-                                    <label>Work Number</label>
-                                    <input type="text" id="edit-guardianWorkPhone" class="w-full">
-                                </div>
-                                <div class="form-group">
-                                    <label>Work Email</label>
-                                    <input type="email" id="edit-guardianWorkEmail" class="w-full">
+                                <!-- Declaration Section (Read-only) -->
+                                <div class="mt-6 p-4 bg-gray-50 rounded-lg">
+                                    <h4 class="font-semibold text-gray-700 mb-3">Declaration Information</h4>
+                                    <div id="declaration-info" class="space-y-2 text-sm text-gray-600">
+                                        <!-- This will be populated by JavaScript -->
+                                        <p>Signed by: <span id="declaration-name" class="font-medium"></span></p>
+                                        <p>Guardian Signature: <span id="declaration-guardian-signature"
+                                                class="font-medium"></span></p>
+                                        <p>Student Signature: <span id="declaration-student-signature"
+                                                class="font-medium"></span></p>
+                                        <p>Date: <span id="declaration-date" class="font-medium"></span></p>
+                                        <p>Signed at: <span id="declaration-location" class="font-medium"></span></p>
+                                    </div>
                                 </div>
                             </div>
                         </div>

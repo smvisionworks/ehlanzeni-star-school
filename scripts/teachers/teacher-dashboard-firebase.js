@@ -6,8 +6,57 @@ let classesChart, assignmentsChart, resourcesChart;
 let currentUser = null;
 let currentTeacherData = null;
 
+
+
+function enforceMinimumScreenSize(options = {}) {
+    const {
+        minWidth = 768,
+        redirectUrl = '../landing/use-bigger-screen.html',
+        showAlert = true
+    } = options;
+
+    let redirected = false;
+
+    function checkScreen() {
+        if (redirected) return;
+
+        const width = window.innerWidth;
+        const height = window.innerHeight;
+        const isSmallScreen = width < minWidth || height < 500;
+
+        if (isSmallScreen) {
+            redirected = true;
+
+            console.warn('Blocked small screen:', { width, height });
+
+            if (showAlert) {
+                alert(
+                    'This teacher dashboard is not supported on small screens.\n\n' +
+                    'Please use a tablet or laptop.'
+                );
+            }
+
+            // Hard redirect
+            window.location.href = redirectUrl;
+        }
+    }
+
+    checkScreen();
+    window.addEventListener('resize', checkScreen);
+    window.addEventListener('orientationchange', checkScreen);
+}
+
+
 // Check authentication and load dashboard
 document.addEventListener('DOMContentLoaded', () => {
+
+    // 🚫 Block small screens early
+    enforceMinimumScreenSize({
+        minWidth: 768,
+        redirectUrl: '../landing/unsupported-device.html',
+        showAlert: true
+    });
+
     onAuthStateChanged(auth, async (user) => {
         if (!user) {
             showError('Please log in to access this page');
@@ -20,6 +69,7 @@ document.addEventListener('DOMContentLoaded', () => {
         await initDashboard();
     });
 });
+
 
 // Check if user is a registered teacher
 async function checkTeacherStatus(uid) {
@@ -39,7 +89,7 @@ async function checkTeacherStatus(uid) {
         // Check if teacher account is pending approval
         if (currentTeacherData.status === 'pending') {
             showError('Your teacher account is pending admin approval. You will be notified once approved. Please check back later.');
-            setTimeout(() => window.location.href = '../landing/login.html', 5000);
+            setTimeout(() => window.location.href = '../landing/pending-admin-aproval.html', 1000);
             return false;
         }
 
@@ -51,6 +101,7 @@ async function checkTeacherStatus(uid) {
         return false;
     }
 }
+
 
 async function initDashboard() {
     showLoading();

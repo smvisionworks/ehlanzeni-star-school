@@ -56,10 +56,6 @@ document.getElementById('teacherForm').addEventListener('submit', async (e) => {
     const declarationName = document.getElementById('declarationName').value;
     const declarationDate = document.getElementById('declarationDate').value;
     
-    // Files (we'll just store the file names for now)
-    const idCopyFile = document.getElementById('idCopy').files[0];
-    const qualificationsFile = document.getElementById('qualifications').files[0];
-    const cvFile = document.getElementById('cv').files[0];
 
     // Validation
     if (password !== confirmPassword) {
@@ -107,11 +103,6 @@ document.getElementById('teacherForm').addEventListener('submit', async (e) => {
         preferredSchedule,
         availableStartDate
       },
-      documents: {
-        idCopy: idCopyFile ? idCopyFile.name : '',
-        qualifications: qualificationsFile ? qualificationsFile.name : '',
-        cv: cvFile ? cvFile.name : ''
-      },
       declaration: {
         name: declarationName,
         date: declarationDate
@@ -124,38 +115,6 @@ document.getElementById('teacherForm').addEventListener('submit', async (e) => {
     // Save teacher data to Firebase Database
     const teacherRef = ref(database, `teachers/${user.uid}`);
     await set(teacherRef, teacherData);
-
-    // Upload documents to Firebase Storage
-    try {
-      const uploadedDocs = {};
-      
-      if (idCopyFile) {
-        const idRef = storageRef(storage, `teacherapplication/${user.uid}/idCopy-${Date.now()}`);
-        await uploadBytes(idRef, idCopyFile);
-        uploadedDocs.idCopy = idRef.fullPath;
-      }
-      
-      if (qualificationsFile) {
-        const qualRef = storageRef(storage, `teacherapplication/${user.uid}/qualifications-${Date.now()}`);
-        await uploadBytes(qualRef, qualificationsFile);
-        uploadedDocs.qualifications = qualRef.fullPath;
-      }
-      
-      if (cvFile) {
-        const cvRef = storageRef(storage, `teacherapplication/${user.uid}/cv-${Date.now()}`);
-        await uploadBytes(cvRef, cvFile);
-        uploadedDocs.cv = cvRef.fullPath;
-      }
-
-      // Update teacher data with document paths
-      if (Object.keys(uploadedDocs).length > 0) {
-        const updateRef = ref(database, `teachers/${user.uid}/documents`);
-        await set(updateRef, uploadedDocs);
-      }
-    } catch (uploadErr) {
-      console.error('Document upload failed:', uploadErr);
-      showToast('Documents could not be uploaded, but your application was saved', 'warning');
-    }
 
     showToast('Registration successful! Your application is pending admin approval. You will be notified once approved.', 'success');
     
@@ -181,4 +140,4 @@ function showToast(message, type = 'info') {
   setTimeout(() => {
     toast.style.display = 'none';
   }, 5000);
-}
+} 
