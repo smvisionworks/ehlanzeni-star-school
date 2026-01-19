@@ -137,11 +137,18 @@ document.getElementById('applicationForm').addEventListener('submit', async (e) 
         for (const teacherId in teachers) {
           const teacher = teachers[teacherId];
 
-          if (!teacher.subjects) continue;
+          // Support both legacy teacher.subjects and new teachingInfo.subjects
+          const teacherSubjectsRaw = teacher?.teachingInfo?.subjects || teacher?.subjects || [];
+          if (!teacherSubjectsRaw || teacherSubjectsRaw.length === 0) continue;
 
-          // Find matching subjects
-          const overlap = teacher.subjects.filter(sub =>
-            studentSubjects.includes(sub)
+          const teacherSubjectsNorm = teacherSubjectsRaw.map(s => String(s).trim().toLowerCase()).filter(Boolean);
+          const studentSubjectsNorm = studentSubjects.map(s => String(s).trim().toLowerCase());
+
+          // Find matching subjects (case-insensitive)
+          const overlapNorm = teacherSubjectsNorm.filter(sub => studentSubjectsNorm.includes(sub));
+          const overlap = overlapNorm.map(s =>
+            // preserve original casing if available
+            teacherSubjectsRaw.find(t => String(t).trim().toLowerCase() === s) || s
           );
 
           if (overlap.length > 0) {

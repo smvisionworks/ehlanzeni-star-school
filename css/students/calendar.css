@@ -21,6 +21,24 @@
     }
 }
 
+@keyframes shimmer {
+    0% {
+        background-position: -1000px 0;
+    }
+    100% {
+        background-position: 1000px 0;
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+}
+
 :root {
     --primary: #1B3A61;
     --dark-shade: #132945;
@@ -51,22 +69,23 @@ body {
     position: relative;
 }
 
-body::after {
+body::before {
     content: '';
-    position: absolute;
-    top: 20px;
-    right: 40px;
-    width: 120px;
-    height: 60px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     background-image: url('../../src/images/logo1.png');
-    background-size: contain;
+    background-size: 50%;
     background-repeat: no-repeat;
     background-position: center;
-    z-index: 990;
+    opacity: 0.05;
+    z-index: -1;
     pointer-events: none;
-    opacity: 0.3;
     filter: grayscale(100%);
 }
+
 
 .sidebar {
     animation: slideInFromLeft 0.6s ease-out;
@@ -173,34 +192,6 @@ body::after {
     background: var(--accent);
     color: var(--dark-shade);
     font-weight: 600;
-}
-
-.logout {
-    padding: 0 1.5rem;
-}
-
-.logout-btn {
-    width: 100%;
-    padding: 0.9rem;
-    background: var(--dark-shade);
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 0.95rem;
-    font-weight: 500;
-    transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.logout-btn i {
-    margin-right: 0.5rem;
-}
-
-.logout-btn:hover {
-    background: #0f1e35;
 }
 
 /* Main Content */
@@ -990,6 +981,72 @@ footer {
 .toast.show {
     transform: translateY(0);
     opacity: 1;
+}
+
+/* Skeleton Loading Styles */
+.calendar-loading {
+    padding: 2rem;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.loading-header {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+}
+
+.skeleton {
+    background: linear-gradient(
+        90deg,
+        #f0f0f0 0%,
+        #e0e0e0 20%,
+        #f0f0f0 40%,
+        #f0f0f0 100%
+    );
+    background-size: 1000px 100%;
+    animation: shimmer 2s infinite linear;
+    border-radius: 8px;
+}
+
+.skeleton-text {
+    height: 24px;
+    border-radius: 4px;
+}
+
+.skeleton-calendar {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.skeleton-calendar th {
+    padding: 1rem;
+    background: var(--light-shade);
+}
+
+.skeleton-day {
+    width: 50px;
+    height: 16px;
+    margin: 0 auto;
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+.skeleton-calendar td {
+    padding: 0.75rem;
+    border: 1px solid var(--border);
+    height: 100px;
+    vertical-align: top;
+}
+
+.skeleton-cell {
+    width: 100%;
+    height: 80px;
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+.skeleton-cell:nth-child(odd) {
+    animation-delay: 0.2s;
 }
 
 

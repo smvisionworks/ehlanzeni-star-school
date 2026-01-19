@@ -258,26 +258,28 @@ async function fetchUpcomingClasses(courseIds, today, endOfWeek) {
     try {
         const eventsRef = ref(database, 'calendar_events');
         const eventsSnapshot = await get(eventsRef);
-        
         if (!eventsSnapshot.exists()) {
             console.log('No calendar events found in database');
             return 0;
         }
-
-        const allEvents = eventsSnapshot.val();
-        console.log('All calendar events:', allEvents);
-
-        const upcomingEvents = Object.values(allEvents).filter(event => {
+        const allTeachersEvents = eventsSnapshot.val();
+        let allEvents = [];
+        // Flatten nested events: calendar_events/{teacherId}/{eventId}
+        Object.values(allTeachersEvents).forEach(teacherEvents => {
+            if (teacherEvents && typeof teacherEvents === 'object') {
+                allEvents = allEvents.concat(Object.values(teacherEvents));
+            }
+        });
+        console.log('All calendar events (flattened):', allEvents);
+        const weekEnd = endOfWeek.toISOString().split('T')[0];
+        const upcomingEvents = allEvents.filter(event => {
             const matchesCourse = courseIds.includes(event.courseId);
-            const inDateRange = event.date >= today && event.date <= endOfWeek.toISOString().split('T')[0];
-            
+            const inDateRange = event.date >= today && event.date <= weekEnd;
             if (matchesCourse && inDateRange) {
                 console.log('Found upcoming event:', event);
             }
-            
             return matchesCourse && inDateRange;
         });
-
         console.log('Upcoming classes fetched:', upcomingEvents.length, upcomingEvents);
         return upcomingEvents.length;
     } catch (error) {
@@ -288,26 +290,23 @@ async function fetchUpcomingClasses(courseIds, today, endOfWeek) {
 
 async function fetchWeeklyAssignments(teacherId, startOfWeek, endOfWeek) {
     try {
-        const assignmentsRef = ref(database, 'assignments');
-        const assignmentsSnapshot = await get(assignmentsRef);
-        
-        if (!assignmentsSnapshot.exists()) {
-            console.log('No assignments found in database');
+        // Use resources node, filter by resourceType === 'assignment' and teacherId
+        const resourcesRef = ref(database, 'resources');
+        const resourcesSnapshot = await get(resourcesRef);
+        if (!resourcesSnapshot.exists()) {
+            console.log('No resources found in database');
             return 0;
         }
-
-        const allAssignments = assignmentsSnapshot.val();
-        console.log('All assignments:', allAssignments);
-
-        const weeklyAssignments = Object.values(allAssignments).filter(assignment => {
-            const matchesTeacher = assignment.teacherId === teacherId;
-            const assignmentDate = new Date(assignment.createdAt || assignment.created_at);
+        const allResources = resourcesSnapshot.val();
+        console.log('All resources (for assignments):', allResources);
+        const weeklyAssignments = Object.values(allResources).filter(resource => {
+            const isAssignment = resource.resourceType === 'assignment';
+            const matchesTeacher = resource.teacherId === teacherId;
+            const assignmentDate = new Date(resource.createdAt || resource.created_at);
             const inDateRange = assignmentDate >= startOfWeek && assignmentDate <= endOfWeek;
-            
-            return matchesTeacher && inDateRange;
+            return isAssignment && matchesTeacher && inDateRange;
         });
-
-        console.log('Weekly assignments fetched:', weeklyAssignments.length, weeklyAssignments);
+        console.log('Weekly assignments fetched (from resources):', weeklyAssignments.length, weeklyAssignments);
         return weeklyAssignments.length;
     } catch (error) {
         console.error('Error fetching weekly assignments:', error);
@@ -472,32 +471,4 @@ function showDashboard() {
     document.getElementById('weeklyScore').style.display = 'block';
 }
 
-function showLogoutModal() {
-    document.getElementById('logoutModal').style.display = 'flex';
-}
 
-function hideLogoutModal() {
-    document.getElementById('logoutModal').style.display = 'none';
-}
-
-async function handleLogout() {
-    try {
-        await signOut(auth);
-        window.location.href = '../landing/login.html';
-    } catch (error) {
-        showError('Logout failed: ' + error.message);
-    }
-    hideLogoutModal();
-}
-
-// Event Listeners
-document.getElementById('logoutBtn').addEventListener('click', (e) => {
-    e.preventDefault();
-    showLogoutModal();
-});
-
-document.getElementById('confirmLogout').addEventListener('click', handleLogout);
-
-document.getElementById('cancelLogout').addEventListener('click', () => {
-    hideLogoutModal();
-});

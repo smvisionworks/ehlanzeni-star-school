@@ -26,9 +26,7 @@
         <a href="/teachers/teachercalendar.html"><i class="fas fa-calendar-alt"></i> Calendar</a>
         <a href="/teachers/mystudents.html"><i class="fas fa-users"></i> My Students</a>
       </div>
-    </div>
-    <div class="logout">
-      <button id="logoutBtn">Logout</button>
+      
     </div>
   </div>
 
@@ -69,15 +67,31 @@
       <p>Based on your weekly classes, assignments, and resources</p>
     </div>
     <div id="errorMessage" class="error-message" style="display: none;"></div>
-    <div id="logoutModal" class="logout-modal">
-      <div class="logout-card">
-        <h3>Are you sure you want to log out?</h3>
-        <button class="btn confirm-btn" id="confirmLogout">Logout</button>
-        <button class="btn cancel-btn" id="cancelLogout">Cancel</button>
-      </div>
-    </div>
+   
   </div>
 
   <script type="module" src="/scripts/teachers/teacher-dashboard-firebase.js"></script>
+</div>
+<script type="module" src="/scripts/global-floating-logout.js"></script>
+
+<script>
+  // Sidebar tab highlight based on current page URL
+  document.addEventListener('DOMContentLoaded', function() {
+    const links = document.querySelectorAll('.nav-links a');
+    const current = window.location.pathname.split('/').pop();
+    links.forEach(link => {
+      const href = link.getAttribute('href');
+      if (href && href.endsWith(current)) {
+        link.classList.add('active');
+      } else {
+        link.classList.remove('active');
+      }
+      link.addEventListener('click', function() {
+        links.forEach(l => l.classList.remove('active'));
+        this.classList.add('active');
+      });
+    });
+  });
+</script>
 </body>
 </html>

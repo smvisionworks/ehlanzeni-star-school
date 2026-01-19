@@ -6,7 +6,6 @@
   <title>Calendar - Ehlanzeni Star School</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <link rel="stylesheet" href="/css/students/calendar.css">
-  <link rel="stylesheet" href="/css/logout-modal.css">
   <link rel="shortcut icon" href="/src/images/LOGO1.png" type="image/x-icon">
 </head>
 <body>
@@ -21,15 +20,13 @@
       </div>
       <div class="nav-links">
         <a href="studentdashboard.html"><i class="fas fa-home"></i> Dashboard</a>
-        <a href="mycourses.html"><i class="fas fa-book"></i> My Courses</a>
+        <a href="mycourses.html"><i class="fas fa-book"></i> My Subjects</a>
         <a href="grades.html"><i class="fas fa-graduation-cap"></i> Grades</a>
         <a href="calendar.html" class="active"><i class="fas fa-calendar-alt"></i> Calendar</a>
         <a href="resources.html"><i class="fas fa-folder"></i> Resources</a>
       </div>
     </div>
-     <div class="logout">
-            <button class="logout-btn" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</button>
-        </div>
+     
   </div>
 
   <div class="main-content">
@@ -63,23 +60,13 @@
     </div>
   </div>
 
-  <div id="logoutModal" class="modal">
-      <div class="modal-content">
-          <button class="close-button">&times;</button>
-          <h3>Confirm Logout</h3>
-          <p>Are you sure you want to log out of Ehlanzeni Star School?</p>
-          <div class="modal-buttons">
-              <button class="cancel-btn" id="cancelLogoutBtn">Cancel</button>
-              <button class="confirm-btn" id="confirmLogoutBtn">Logout</button>
-          </div>
-      </div>
-  </div>
+ 
 
 
   <div id="toast" class="toast"></div>
 
 <script type="module" src="/scripts/students/calendar-firebase.js"></script>
-<script src="/scripts/logout.js"></script>
+<script type="module" src="/scripts/global-floating-logout.js"></script>
 
  <script>
         

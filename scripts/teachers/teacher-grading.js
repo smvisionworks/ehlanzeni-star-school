@@ -38,7 +38,7 @@ function setupGradingModal() {
                 position: fixed;
                 top: 0; left: 0;
                 width: 100%; height: 100%;
-                background: rgba(0,0,0,0.6);
+                background: rgba(94, 94, 94, 0.6);
                 display: none;
                 align-items: center;
                 justify-content: center;
@@ -51,37 +51,43 @@ function setupGradingModal() {
                 background: #fff;
                 width: 90%;
                 max-width: 1100px;
-                max-height: 90%;
+                max-height: 92vh;
                 padding: 20px;
-                border-radius: 8px;
-                overflow-y: auto;
+                border-radius: 12px;
                 display: flex;
                 flex-direction: column;
-                gap: 10px;
+                gap: 14px;
+                box-shadow: 0 20px 60px rgba(0,0,0,0.18);
             }
-            .modal-header {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                margin-bottom: 15px;
-            }
+          .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    border-radius: 8px; /* <-- corrected property */
+}
+
             .close-btn { cursor: pointer; font-size: 1.5em; border: none; background: transparent; }
             .submissions-list {
-                display: grid;
-                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-                gap: 10px;
+                display: flex;
+                flex-direction: column;
+                gap: 14px;
+                padding-right: 4px;
+                overflow-y: auto;
+                max-height: calc(90vh - 140px);
             }
             .submission-item {
-                background: #f9f9f9;
-                border: 1px solid #ccc;
-                border-radius: 5px;
+                background: #f9fbff;
+                border: 1px solid #dbeafe;
+                border-radius: 12px;
                 padding: 10px;
                 display: flex;
                 flex-direction: column;
-                gap: 5px;
-                transition: transform 0.2s, box-shadow 0.2s;
+                gap: 10px;
+                box-shadow: 0 4px 14px rgba(0,0,0,0.06);
+                width: 100%;
             }
-            .submission-item:hover { transform: translateY(-2px); box-shadow: 0 6px 12px rgba(0,0,0,0.1); }
+            .submission-item:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(0,0,0,0.08); }
             .submission-header { display: flex; justify-content: space-between; margin-bottom: 5px; }
             .submission-details { font-size: 0.9rem; margin-bottom: 5px; }
             .grading-section input, .grading-section textarea {
@@ -117,13 +123,27 @@ export function openGradingModal(assignment) {
 
     const assignmentInfo = $id('assignmentInfo');
     if (assignmentInfo) {
-        assignmentInfo.innerHTML = `
-            <div class="assignment-meta">
-                <span><strong>Course:</strong> ${escapeHtml(assignment.courseName || 'Unknown')}</span>
-                <span><strong>Due Date:</strong> ${assignment.dueDate ? new Date(assignment.dueDate).toLocaleDateString() : 'Not set'}</span>
-                <span><strong>Created:</strong> ${assignment.createdAt ? new Date(assignment.createdAt).toLocaleDateString() : 'Unknown'}</span>
-            </div>
-        `;
+       assignmentInfo.innerHTML = `
+  <div class="assignment-meta" style="
+        display: flex; 
+        gap: 1.2rem; 
+        flex-wrap: wrap; 
+        font-size: 0.9rem; 
+        color: #1f2937; 
+        font-weight: 500;
+      ">
+    <span style="display: inline-block;">
+      <strong>Subject:</strong> ${escapeHtml(assignment.courseName || 'Unknown')}
+    </span>
+    <span style="display: inline-block;">
+      <strong>Due Date:</strong> ${assignment.dueDate ? new Date(assignment.dueDate).toLocaleDateString() : 'Not set'}
+    </span>
+    <span style="display: inline-block;">
+      <strong>Created:</strong> ${assignment.createdAt ? new Date(assignment.createdAt).toLocaleDateString() : 'Unknown'}
+    </span>
+  </div>
+`;
+
     }
 
     if (modal) {
@@ -180,21 +200,60 @@ function createSubmissionItem(studentId, submission) {
     const submittedAt = submission.submittedAt ? new Date(submission.submittedAt).toLocaleString() : 'Unknown';
     const isGraded = status === 'graded';
 
-    item.innerHTML = `
-        <div class="submission-header">
-            <strong>${escapeHtml(submission.studentName || 'Unknown Student')}</strong>
-            <span>${escapeHtml(status)}</span>
-        </div>
-        <div class="submission-details">
-            <a href="${submission.fileUrl}" target="_blank" download>${escapeHtml(submission.fileName || 'Download')}</a>
-            <div>Submitted: ${escapeHtml(submittedAt)}</div>
-        </div>
-        <div class="grading-section">
-            <input type="number" id="grade-${studentId}" placeholder="Grade 0-100" min="0" max="100" step="0.1" value="${grade}" class="${isGraded ? 'graded' : ''}">
-            <textarea id="feedback-${studentId}" placeholder="Feedback..." class="${isGraded ? 'graded' : ''}">${submission.feedback || ''}</textarea>
-            <button onclick="saveGrade('${studentId}')">${isGraded ? 'Update' : 'Save'} Grade</button>
-        </div>
-    `;
+   item.innerHTML = `
+  <div class="submission-grading-card submission-row">
+
+    <!-- STUDENT -->
+    <div class="submission-student">
+      <div class="submission-avatar">
+        ${(submission.studentName || '')[0] || '?'}
+      </div>
+      <div class="student-name">
+        ${escapeHtml(submission.studentName || 'Unknown')}
+      </div>
+    </div>
+
+    <!-- FILE -->
+    <div class="submission-file">
+      <i class="fas fa-file"></i>
+      <a href="${submission.fileUrl}" target="_blank" download class="file-link">
+        ${escapeHtml(submission.fileName || 'File')}
+      </a>
+    </div>
+
+    <!-- GRADE -->
+    <div class="submission-grade">
+      <input
+        type="number"
+        id="grade-${studentId}"
+        min="0"
+        max="100"
+        step="0.1"
+        value="${grade}"
+        class="grade-input ${status === 'graded' ? 'graded' : ''}"
+      />
+    </div>
+
+    <!-- FEEDBACK -->
+    <div class="submission-feedback">
+      <textarea
+        id="feedback-${studentId}"
+        placeholder="Feedback..."
+        class="${status === 'graded' ? 'graded' : ''}"
+      >${submission.feedback || ''}</textarea>
+    </div>
+
+    <!-- ACTION -->
+    <div class="submission-action">
+      <button class="save-grade-btn" onclick="saveGrade('${studentId}')">
+        ${status === 'graded' ? 'Update' : 'Save'}
+      </button>
+    </div>
+
+  </div>
+`;
+
+
 
     return item;
 }

@@ -84,7 +84,6 @@ async function init() {
         lastName: currentUserData.lastName
     });
 
-    initModalListeners();
     initSidebarListeners();
     initFilters();
 
@@ -96,29 +95,7 @@ async function init() {
 /* ---------------------------
    Modal & sidebar listeners
    --------------------------- */
-function initModalListeners() {
-    const logoutModal = document.getElementById('logoutModal');
-    const confirmLogoutBtn = document.getElementById('confirmLogoutBtn');
-    const cancelLogoutBtn = document.getElementById('cancelLogoutBtn');
-    const logoutTriggerBtn = document.getElementById('logoutBtn');
 
-    // Open modal
-    logoutTriggerBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        logoutModal.classList.add('active');
-    });
-
-    // Close modal
-    cancelLogoutBtn.addEventListener('click', () => {
-        logoutModal.classList.remove('active');
-    });
-
-    // Confirm logout
-    confirmLogoutBtn.addEventListener('click', () => {
-        logoutModal.classList.remove('active');
-        handleLogout();
-    });
-}
 
 function initSidebarListeners() {
     const closeSidebarBtn = document.getElementById('closeSidebar');

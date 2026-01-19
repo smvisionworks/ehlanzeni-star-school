@@ -97,7 +97,7 @@ async function initPage() {
     const teacherNameEl = $id('teacherName');
     if (teacherNameEl) teacherNameEl.textContent = fullName || 'Teacher';
 
-    initGradingSystem();
+    initGradingSystem(currentUser);
 
     await loadTeacherCourses();
     await loadResources();
@@ -460,6 +460,26 @@ function setupEventListeners() {
     const form = $id('createResourceForm');
     if (form) form.addEventListener('submit', handleCreateResource);
 
+    // Resource type change handler for due date visibility
+    const resourceTypeSelect = $id('createResourceType');
+    const dueDateGroup = $id('dueDateGroup');
+    const dueDateInput = $id('createResourceDueDate');
+    
+    if (resourceTypeSelect && dueDateGroup && dueDateInput) {
+        resourceTypeSelect.addEventListener('change', (e) => {
+            const isAssignment = e.target.value === 'assignment';
+            dueDateGroup.style.display = isAssignment ? 'block' : 'none';
+            dueDateInput.required = isAssignment;
+            if (!isAssignment) {
+                dueDateInput.value = '';
+            }
+        });
+        // Trigger initial state
+        const initialIsAssignment = resourceTypeSelect.value === 'assignment';
+        dueDateGroup.style.display = initialIsAssignment ? 'block' : 'none';
+        dueDateInput.required = initialIsAssignment;
+    }
+
     const fileInput = $id('createResourceFile');
     if (fileInput) fileInput.addEventListener('change', (e) => {
         const fNameEl = $id('fileName');
@@ -472,6 +492,50 @@ function setupEventListeners() {
     if (fileUploadArea) {
         fileUploadArea.addEventListener('click', () => {
             fileInput.click();
+        });
+        
+        // Drag and drop handlers with validation
+        fileUploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            fileUploadArea.classList.add('dragover');
+        });
+        
+        fileUploadArea.addEventListener('dragleave', () => {
+            fileUploadArea.classList.remove('dragover');
+        });
+        
+        fileUploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            fileUploadArea.classList.remove('dragover');
+            
+            if (e.dataTransfer.files.length) {
+                const droppedFile = e.dataTransfer.files[0];
+                
+                // Validate file type
+                const allowedExtensions = ['.pdf', '.doc', '.docx', '.ppt', '.pptx', '.xls', '.xlsx', 
+                                          '.jpg', '.jpeg', '.png', '.gif', '.mp3', '.wav', 
+                                          '.mp4', '.mov', '.avi', '.txt', '.zip'];
+                const fileName = droppedFile.name.toLowerCase();
+                const isValidType = allowedExtensions.some(ext => fileName.endsWith(ext));
+                
+                if (!isValidType) {
+                    showToast(`Invalid file type. Please upload: PDF, Office docs, Images, Videos, Audio, TXT, or ZIP files.`, 'error');
+                    return;
+                }
+                
+                // Validate file size (max 50MB)
+                const maxSize = 50 * 1024 * 1024; // 50MB in bytes
+                if (droppedFile.size > maxSize) {
+                    showToast(`File is too large. Maximum size is 50MB.`, 'error');
+                    return;
+                }
+                
+                // Create a DataTransfer object to set the files
+                const dataTransfer = new DataTransfer();
+                dataTransfer.items.add(droppedFile);
+                fileInput.files = dataTransfer.files;
+                fileInput.dispatchEvent(new Event('change'));
+            }
         });
     }
 
@@ -525,10 +589,12 @@ async function handleCreateResource(e) {
     const courseId = $id('createResourceCourseId')?.value;
     const resourceType = $id('createResourceType')?.value;
     const description = $id('createResourceDescription')?.value;
+    const dueDate = $id('createResourceDueDate')?.value;
     const fileInput = $id('createResourceFile');
 
     if (!title) return showToast('Please enter a title', 'error');
     if (!courseId) return showToast('Please select a course', 'error');
+    if (resourceType === 'assignment' && !dueDate) return showToast('Please set a due date for assignment', 'error');
     if (!fileInput || !fileInput.files || !fileInput.files[0]) return showToast('Please select a file', 'error');
 
     const btn = $id('createResourceBtn');
@@ -570,6 +636,11 @@ async function handleCreateResource(e) {
             createdAt: new Date().toISOString(),
             storagePath: storagePath // Store the path for easier deletion later
         };
+        
+        // Add due date if resource is an assignment
+        if (resourceType === 'assignment' && dueDate) {
+            resource.dueDate = new Date(dueDate).toISOString();
+        }
 
         // Save metadata to Realtime Database
         await set(newDbRef, resource);
@@ -665,14 +736,54 @@ function formatFileSize(bytes) {
 }
 
 function showToast(message, type = 'success') {
-    const toast = $id('toast');
+    let toast = $id('toast');
+    
+    // Create toast if it doesn't exist
     if (!toast) {
-        console.log(`[TOAST:${type}] ${message}`);
-        return;
+        toast = document.createElement('div');
+        toast.id = 'toast';
+        toast.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 16px;
+            border-radius: 8px;
+            background: rgba(30, 30, 30, 0.95);
+            backdrop-filter: blur(10px);
+            border-left: 4px solid rgba(255, 255, 255, 0.5);
+            color: white;
+            font-weight: 500;
+            z-index: 9999;
+            opacity: 0;
+            transition: opacity 0.3s;
+            max-width: 400px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        `;
+        document.body.appendChild(toast);
     }
-    toast.textContent = message;
-    toast.className = `toast ${type} show`;
-    setTimeout(() => { toast.className = 'toast'; }, 3000);
+    
+    const icon = type === 'success' 
+        ? '<i class="fas fa-check-circle"></i>' 
+        : '<i class="fas fa-exclamation-triangle"></i>';
+    const title = type === 'success' ? 'Success' : 'Error';
+    const borderColor = type === 'success' ? '#4CAF50' : '#f44336';
+    
+    toast.innerHTML = `
+        <span style="display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 50%; background: ${borderColor}; flex-shrink: 0;">
+            ${icon}
+        </span>
+        <span style="display: flex; flex-direction: column; gap: 4px;">
+            <span style="font-weight: 600; font-size: 14px;">${title}</span>
+            <span style="font-size: 13px; opacity: 0.9;">${message}</span>
+        </span>
+    `;
+    toast.style.borderLeftColor = borderColor;
+    toast.style.opacity = '1';
+    
+    setTimeout(() => { toast.style.opacity = '0'; }, 4000);
 }
 
 function openCreateModal() {

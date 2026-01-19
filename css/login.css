@@ -12,7 +12,7 @@
 
         /* General Body and Layout */
         body {
-          
+
             margin: 0;
             font-family: 'Segoe UI', Tahoma, Verdana, sans-serif;
             background: url("../src/images/img_7260.jpg") no-repeat center center/cover fixed;
@@ -129,88 +129,89 @@
             min-height: 100vh;
         }
 
-        header {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background: rgba(255, 255, 255, 0.97);
-            padding: 15px 40px;
-            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
-            z-index: 1000;
-            transition: all 0.3s ease;
-            display: flex;
-            justify-content: flex-start;
-            align-items: center;
-            gap: 15px;
-            box-sizing: border-box;
-        }
+        
+/* HEADER */
+header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.97);
+    padding: 15px 40px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+    z-index: 1000;
+    transition: all 0.3s ease;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 15px;
+    box-sizing: border-box;
+}
 
-        .logo-area {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
+.logo-area {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
 
+.logo-link {
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: transform 0.3s ease;
+    color: inherit;
+}
 
-        .logo-area h2 {
-            margin: 0;
-            font-size: 1.5rem;
-            letter-spacing: 1.5px;
-            font-weight: bold;
-            color: #002060;
-            border-bottom: 2px solid #1e90ff;
-            display: inline-block;
-            padding-bottom: 5px;
-        }
+.logo-link:hover {
+    transform: scale(1.02);
+}
 
-        nav {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            flex-wrap: wrap;
-            margin-left: auto;
-            padding-right: 10px;
-        }
+.logo-area img {
+    height: 45px;
+    transition: transform 0.3s;
+}
 
-        .logo-link {
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            transition: transform 0.3s ease;
-            color: inherit;
-        }
+.logo-area h2 {
+    margin: 0;
+    font-size: 1.5rem;
+    letter-spacing: 1.5px;
+    font-weight: bold;
+    color: #002060;
+    border-bottom: 2px solid #1e90ff;
+    display: inline-block;
+    padding-bottom: 5px;
+}
 
-        .logo-area img {
-            height: 45px;
-            transition: transform 0.3s;
-        }
+nav {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-left: auto;
+    padding-right: 10px;
+}
 
-        .logo-area img:hover {
-            transform: rotate(-5deg) scale(1.05);
-        }
+nav a {
+  text-decoration: none;
+  color: #002060;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  position: relative;
+  font-size: 0.95rem;
+  padding: 8px 36px;
+  border-radius: 20px;
+  border: 2px solid transparent;
+  transition: all 0.3s ease;
+}
 
-        nav a {
-            text-decoration: none;
-            color: #002060;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-            position: relative;
-            font-size: 0.95rem;
-            padding: 8px 36px;
-            border-radius: 20px;
-            border: 2px solid transparent;
-            transition: all 0.3s ease;
-        }
-
-        nav a:hover {
-            color: #1e90ff;
-            border-color: #1e90ff;
-            background: rgba(30, 144, 255, 0.08);
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
-            transform: translateY(-2px);
-        }
+nav a:hover {
+  color: #1e90ff;
+  border-color: #1e90ff;
+  background: rgba(30, 144, 255, 0.08);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
 
         .login-symbol-link {
             text-decoration: none;
@@ -260,7 +261,7 @@
             z-index: 1;
             opacity: 0;
             transform: translateY(18px) scale(0.995);
-            animation: loginAppear 0.7s cubic-bezier(.2,.9,.2,1) 0.12s forwards;
+            animation: loginAppear 0.7s cubic-bezier(.2, .9, .2, 1) 0.12s forwards;
         }
 
         .login-container .main-logo {
@@ -381,20 +382,20 @@
             font-weight: 700;
             font-size: 0.95rem;
             transition: all 0.18s ease;
-            border: 2px solid rgba(30,144,255,0.18);
+            border: 2px solid rgba(30, 144, 255, 0.18);
         }
 
         .register-btn:hover {
             background: var(--secondary-blue);
             color: #fff;
             transform: translateY(-3px);
-            box-shadow: 0 6px 18px rgba(30,144,255,0.12);
+            box-shadow: 0 6px 18px rgba(30, 144, 255, 0.12);
         }
 
         .register-btn.teacher-btn {
             background: transparent;
             color: var(--teacher-purple);
-            border-color: rgba(106,27,154,0.18);
+            border-color: rgba(106, 27, 154, 0.18);
             box-shadow: none;
         }
 
@@ -402,7 +403,7 @@
             background: var(--teacher-purple);
             color: #fff;
             transform: translateY(-3px);
-            box-shadow: 0 10px 28px rgba(106,27,154,0.16);
+            box-shadow: 0 10px 28px rgba(106, 27, 154, 0.16);
         }
 
         .back-home {
@@ -433,7 +434,7 @@
             flex-wrap: wrap;
             width: 100%;
             box-shadow: 0 -3px 18px rgba(0, 0, 0, 0.12);
-            border-top: 3px solid rgba(255,255,255,0.03);
+            border-top: 3px solid rgba(255, 255, 255, 0.03);
             position: relative;
             z-index: 1;
             text-align: center;
@@ -473,32 +474,68 @@
 
         /* Appear animations for login content */
         @keyframes loginAppear {
-            0% { opacity: 0; transform: translateY(18px) scale(0.995); }
-            100% { opacity: 1; transform: translateY(0) scale(1); }
+            0% {
+                opacity: 0;
+                transform: translateY(18px) scale(0.995);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
         }
 
         @keyframes logoAppear {
-            0% { opacity: 0; transform: translateY(-10px) scale(0.9); }
-            100% { opacity: 1; transform: translateY(0) scale(1); }
+            0% {
+                opacity: 0;
+                transform: translateY(-10px) scale(0.9);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
         }
 
         @keyframes titleAppear {
-            0% { opacity: 0; transform: translateY(8px); }
-            100% { opacity: 1; transform: translateY(0); }
+            0% {
+                opacity: 0;
+                transform: translateY(8px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         @keyframes formAppear {
-            0% { opacity: 0; transform: translateY(10px); }
-            100% { opacity: 1; transform: translateY(0); }
+            0% {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         @keyframes regAppear {
-            0% { opacity: 0; transform: translateY(10px); }
-            100% { opacity: 1; transform: translateY(0); }
+            0% {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         /* Respect user preference for reduced motion */
         @media (prefers-reduced-motion: reduce) {
+
             .login-container,
             .login-container .main-logo,
             .login-container h3,
@@ -526,6 +563,11 @@
             transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
             z-index: 2000;
             visibility: hidden;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-left: 4px solid rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(6px);
         }
 
         .toast.show {
@@ -536,26 +578,49 @@
 
         .toast.error {
             background: #e74c3c;
+            border-left-color: #ffd7d1;
+        }
+
+        .toast .toast-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.15);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+        }
+
+        .toast .toast-body {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .toast .toast-title {
+            font-weight: 700;
+            letter-spacing: 0.01em;
         }
 
         /* Mobile Adjustments */
         @media (max-width: 768px) {
-                header {
-                    padding: 15px 20px;
-                    flex-direction: column;
-                    gap: 10px;
-                }
+            header {
+                padding: 15px 20px;
+                flex-direction: column;
+                gap: 10px;
+            }
 
-                nav {
-                    margin-top: 10px;
-                    justify-content: center;
-                    gap: 15px;
-                    width: 100%;
-                }
+            nav {
+                margin-top: 10px;
+                justify-content: center;
+                gap: 15px;
+                width: 100%;
+            }
 
-                .login-section {
-                    padding: 140px 20px 60px;
-                }
+            .login-section {
+                padding: 140px 20px 60px;
+            }
 
             .login-container {
                 padding: 30px;
@@ -573,197 +638,197 @@
         }
 
 
-/* ============================================================
+        /* ============================================================
    FULL MOBILE RESPONSIVENESS FOR LOGIN + HEADER + FOOTER
    ============================================================ */
 
-/* ============================
+        /* ============================
    MAIN MOBILE BREAKPOINT
    ============================ */
-@media (max-width: 768px) {
+        @media (max-width: 768px) {
 
-    /* Fix background cropping / overflow */
-    body {
-        justify-content: flex-start;
-        overflow-y: auto;
-        background-position: center;
-        background-attachment: scroll;
-        background-color: #fff;
-        
-    }
+            /* Fix background cropping / overflow */
+            body {
+                justify-content: flex-start;
+                overflow-y: auto;
+                background-position: center;
+                background-attachment: scroll;
+                background-color: #fff;
 
-    body::before {
-        backdrop-filter: blur(6px);
-        background: rgba(255, 255, 255, 0.55);
-    }
+            }
 
-    /* -----------------------------
+            body::before {
+                backdrop-filter: blur(6px);
+                background: rgba(255, 255, 255, 0.55);
+            }
+
+            /* -----------------------------
        HEADER
     ----------------------------- */
-    header {
-        flex-direction: column;
-        justify-content: center;
-        text-align: center;
-        padding: 16px 20px;
-        gap: 12px;
-        align-items: center;
-    }
+            header {
+                flex-direction: column;
+                justify-content: center;
+                text-align: center;
+                padding: 16px 20px;
+                gap: 12px;
+                align-items: center;
+            }
 
-    .logo-area {
-        justify-content: center;
-        text-align: center;
-    }
+            .logo-area {
+                justify-content: center;
+                text-align: center;
+            }
 
-    header h2 {
-        font-size: 1.2rem;
-    }
+            header h2 {
+                font-size: 1.2rem;
+            }
 
-    .nav-toggle {
-        display: block;
-    }
+            .nav-toggle {
+                display: block;
+            }
 
-    nav {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        margin-left: 0;
-        gap: 15px;
-        width: 100%;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        background: rgba(255, 255, 255, 0.98);
-        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-        padding: 20px;
-        opacity: 0;
-        visibility: hidden;
-        transform: translateY(-10px);
-        transition: all 0.3s ease;
-        z-index: -1;
-        box-sizing: border-box;
-    }
+            nav {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                margin-left: 0;
+                gap: 15px;
+                width: 100%;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                background: rgba(255, 255, 255, 0.98);
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+                padding: 20px;
+                opacity: 0;
+                visibility: hidden;
+                transform: translateY(-10px);
+                transition: all 0.3s ease;
+                z-index: -1;
+                box-sizing: border-box;
+            }
 
-    nav.open {
-        opacity: 1;
-        visibility: visible;
-        transform: translateY(0);
-    }
+            nav.open {
+                opacity: 1;
+                visibility: visible;
+                transform: translateY(0);
+            }
 
-    nav a {
-        width: 100%;
-        text-align: center;
-        margin: 0;
-        font-size: 1rem;
-        padding: 12px;
-        border-bottom: 1px solid #f0f0f0;
-        box-sizing: border-box;
-    }
+            nav a {
+                width: 100%;
+                text-align: center;
+                margin: 0;
+                font-size: 1rem;
+                padding: 12px;
+                border-bottom: 1px solid #f0f0f0;
+                box-sizing: border-box;
+            }
 
-    nav a:last-child {
-        border-bottom: none;
-    }
+            nav a:last-child {
+                border-bottom: none;
+            }
 
-    /* -----------------------------
+            /* -----------------------------
        WELCOME SCREEN TEXT
     ----------------------------- */
-    #welcome-screen h1 {
-        font-size: 2.4rem;
-        letter-spacing: 1px;
-        padding: 0 20px;
-    }
+            #welcome-screen h1 {
+                font-size: 2.4rem;
+                letter-spacing: 1px;
+                padding: 0 20px;
+            }
 
-    #welcome-screen .welcome-logo {
-        width: 130px;
-    }
+            #welcome-screen .welcome-logo {
+                width: 130px;
+            }
 
-    /* -----------------------------
+            /* -----------------------------
        LOGIN LAYOUT
     ----------------------------- */
-    .login-section {
-        padding: 160px 20px 40px;
-    }
+            .login-section {
+                padding: 160px 20px 40px;
+            }
 
-    .login-container {
-        padding: 28px 25px;
-        max-width: 92%;
-    }
+            .login-container {
+                padding: 28px 25px;
+                max-width: 92%;
+            }
 
-    .login-container .main-logo {
-        height: 90px;
-        margin-bottom: 12px;
-    }
+            .login-container .main-logo {
+                height: 90px;
+                margin-bottom: 12px;
+            }
 
-    .login-container h3 {
-        font-size: 0.95rem;
-    }
+            .login-container h3 {
+                font-size: 0.95rem;
+            }
 
-    .login-container form input {
-        padding: 13px;
-        font-size: 0.9rem;
-    }
+            .login-container form input {
+                padding: 13px;
+                font-size: 0.9rem;
+            }
 
-    .login-container form button {
-        padding: 14px;
-        font-size: 1rem;
-    }
+            .login-container form button {
+                padding: 14px;
+                font-size: 1rem;
+            }
 
-    .register-btn {
-        padding: 10px 24px;
-        font-size: 0.9rem;
-    }
+            .register-btn {
+                padding: 10px 24px;
+                font-size: 0.9rem;
+            }
 
-    /* -----------------------------
+            /* -----------------------------
        TOAST
     ----------------------------- */
-    .toast {
-        right: 10px;
-        left: 10px;
-        top: 15px;
-        font-size: 0.9rem;
-        text-align: center;
-    }
+            .toast {
+                right: 10px;
+                left: 10px;
+                top: 15px;
+                font-size: 0.9rem;
+                text-align: center;
+            }
 
-    /* -----------------------------
+            /* -----------------------------
        FOOTER
     ----------------------------- */
-    footer {
-        flex-direction: column;
-        text-align: center;
-        gap: 10px;
-        padding: 15px 10px;
-        font-size: 0.75rem;
-    }
-}
+            footer {
+                flex-direction: column;
+                text-align: center;
+                gap: 10px;
+                padding: 15px 10px;
+                font-size: 0.75rem;
+            }
+        }
 
-/* ============================
+        /* ============================
    SMALL PHONE BREAKPOINT
    ============================ */
-@media (max-width: 480px) {
-    #welcome-screen h1 {
-        font-size: 1.9rem;
-    }
+        @media (max-width: 480px) {
+            #welcome-screen h1 {
+                font-size: 1.9rem;
+            }
 
-    .login-container {
-        padding: 22px 18px;
-    }
+            .login-container {
+                padding: 22px 18px;
+            }
 
-    .login-container form input {
-        font-size: 0.85rem;
-    }
+            .login-container form input {
+                font-size: 0.85rem;
+            }
 
-    .login-container form button {
-        font-size: 0.95rem;
-        padding: 12px;
-    }
+            .login-container form button {
+                font-size: 0.95rem;
+                padding: 12px;
+            }
 
-    .register-btn {
-        padding: 10px 20px;
-        font-size: 0.85rem;
-    }
+            .register-btn {
+                padding: 10px 20px;
+                font-size: 0.85rem;
+            }
 
-    footer {
-        font-size: 0.7rem;
-        padding: 12px;
-    }
-}
+            footer {
+                font-size: 0.7rem;
+                padding: 12px;
+            }
+        }

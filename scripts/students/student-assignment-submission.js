@@ -37,8 +37,14 @@ function setupSubmissionModal() {
     modal.className = 'modal';
     modal.innerHTML = `
         <div class="modal-content">
-            <div class="modal-header">
-                <h2>Submit Assignment - <span id="submissionAssignmentTitle"></span></h2>
+            <div class="modal-header-styled">
+                <div class="header-content">
+                    <i class="fas fa-paper-plane header-icon"></i>
+                    <div>
+                        <h2>Submit Assignment</h2>
+                        <p class="assignment-title-sub" id="submissionAssignmentTitle"></p>
+                    </div>
+                </div>
                 <button class="close-btn" id="closeSubmissionModalBtn">&times;</button>
             </div>
             
@@ -67,20 +73,32 @@ function setupSubmissionModal() {
                                   rows="3"></textarea>
                     </div>
                     
-                    <div class="submission-details">
-                        <h4>Submission Details</h4>
+                    <div class="submission-details-card">
+                        <div class="card-header">
+                            <i class="fas fa-info-circle"></i>
+                            <h4>Submission Details</h4>
+                        </div>
                         <div class="details-grid">
                             <div class="detail-item">
-                                <strong>Student:</strong>
-                                <span id="submissionStudentName">Loading...</span>
+                                <div class="detail-icon"><i class="fas fa-user"></i></div>
+                                <div class="detail-content">
+                                    <strong>Student</strong>
+                                    <span id="submissionStudentName">Loading...</span>
+                                </div>
                             </div>
                             <div class="detail-item">
-                                <strong>Course:</strong>
-                                <span id="submissionCourseName">Loading...</span>
+                                <div class="detail-icon"><i class="fas fa-book"></i></div>
+                                <div class="detail-content">
+                                    <strong>Course</strong>
+                                    <span id="submissionCourseName">Loading...</span>
+                                </div>
                             </div>
                             <div class="detail-item">
-                                <strong>Due Date:</strong>
-                                <span id="submissionDueDate">No due date set</span>
+                                <div class="detail-icon"><i class="fas fa-calendar-alt"></i></div>
+                                <div class="detail-content">
+                                    <strong>Due Date</strong>
+                                    <span id="submissionDueDate">No due date set</span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -135,7 +153,7 @@ function setupModalEventListeners() {
             }
         });
         
-        // Drag and drop
+        // Drag and drop with validation
         fileUploadArea.addEventListener('dragover', (e) => {
             e.preventDefault();
             fileUploadArea.classList.add('dragover');
@@ -150,6 +168,25 @@ function setupModalEventListeners() {
             fileUploadArea.classList.remove('dragover');
             
             if (e.dataTransfer.files.length) {
+                const droppedFile = e.dataTransfer.files[0];
+                
+                // Validate file type
+                const allowedExtensions = ['.pdf', '.doc', '.docx', '.jpg', '.jpeg', '.png', '.zip', '.txt'];
+                const fileName = droppedFile.name.toLowerCase();
+                const isValidType = allowedExtensions.some(ext => fileName.endsWith(ext));
+                
+                if (!isValidType) {
+                    showToast(`Invalid file type. Please upload: PDF, DOC, DOCX, Images (JPG, PNG), ZIP, or TXT files.`, 'error');
+                    return;
+                }
+                
+                // Validate file size (max 10MB)
+                const maxSize = 10 * 1024 * 1024; // 10MB in bytes
+                if (droppedFile.size > maxSize) {
+                    showToast(`File is too large. Maximum size is 10MB.`, 'error');
+                    return;
+                }
+                
                 fileInput.files = e.dataTransfer.files;
                 fileInput.dispatchEvent(new Event('change'));
             }
@@ -525,26 +562,47 @@ function showToast(message, type = 'success') {
             position: fixed;
             top: 20px;
             right: 20px;
-            padding: 12px 24px;
-            border-radius: 4px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 16px;
+            border-radius: 8px;
+            background: rgba(30, 30, 30, 0.95);
+            backdrop-filter: blur(10px);
+            border-left: 4px solid rgba(255, 255, 255, 0.5);
             color: white;
             font-weight: 500;
             z-index: 9999;
             opacity: 0;
             transition: opacity 0.3s;
+            max-width: 400px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
         `;
         document.body.appendChild(toast);
     }
     
-    // Set toast content and style
-    toast.textContent = message;
-    toast.style.background = type === 'success' ? '#4CAF50' : '#f44336';
+    const icon = type === 'success' 
+        ? '<i class="fas fa-check-circle"></i>' 
+        : '<i class="fas fa-exclamation-triangle"></i>';
+    const title = type === 'success' ? 'Success' : 'Error';
+    const borderColor = type === 'success' ? '#4CAF50' : '#f44336';
+    
+    toast.innerHTML = `
+        <span style="display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 50%; background: ${borderColor}; flex-shrink: 0;">
+            ${icon}
+        </span>
+        <span style="display: flex; flex-direction: column; gap: 4px;">
+            <span style="font-weight: 600; font-size: 14px;">${title}</span>
+            <span style="font-size: 13px; opacity: 0.9;">${message}</span>
+        </span>
+    `;
+    toast.style.borderLeftColor = borderColor;
     toast.style.opacity = '1';
     
-    // Hide after 3 seconds
+    // Hide after 4 seconds
     setTimeout(() => {
         toast.style.opacity = '0';
-    }, 3000);
+    }, 4000);
 }
 
 /* ---------------------------

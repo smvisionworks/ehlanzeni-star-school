@@ -147,30 +147,58 @@ async function renderStudentsForTeacher(teacherId) {
     const { associatedStudents } = state;
     const selectedSubject = subjectSelect.value || '__all';
 
-    const filtered = associatedStudents.filter(s => {
-        if (selectedSubject === '__all') return true;
-        return (s.subjectsForStudent || []).includes(selectedSubject);
-    });
+    // Normalize teacher subjects for comparison
+    const teacherSubjectsNorm = (state.teacherSubjects || []).map(s => String(s).trim().toLowerCase());
+    const selectedSubjectNorm = selectedSubject !== '__all' ? selectedSubject.trim().toLowerCase() : '__all';
 
-    if (filtered.length === 0) {
-        classContainer.innerHTML = `<div class="no-classes">No students found for the selected subject.</div>`;
-        setLoading(false);
-        return;
-    }
-
-    // fetch student profiles in parallel (but safely)
-    const promises = filtered.map(async ({ studentId, subjectsForStudent }) => {
+    // Fetch all student profiles and derive their actual subjects first
+    const promises = associatedStudents.map(async ({ studentId, subjectsForStudent }) => {
         // try application/pending first
         const appSnap = await get(ref(database, `application/pending/${studentId}`));
         const studentProfile = appSnap.exists() ? appSnap.val() : { firstName: 'Unknown', lastName: '', phone: '', guardian: {} };
-        return { studentId, studentProfile, subjectsForStudent };
+        
+        // Derive actual subjects by intersecting teacher subjects with student subjects
+        let derivedSubjects = subjectsForStudent || [];
+        
+        // If mapping is incomplete or empty, derive from student's actual subjects
+        if (studentProfile.subjects && Array.isArray(studentProfile.subjects)) {
+            const studentSubjectsNorm = studentProfile.subjects.map(s => String(s).trim().toLowerCase());
+            const overlapNorm = teacherSubjectsNorm.filter(tSub => studentSubjectsNorm.includes(tSub));
+            
+            // Map back to original casing from student or teacher list
+            const actualOverlap = overlapNorm.map(norm => {
+                const studentMatch = studentProfile.subjects.find(s => String(s).trim().toLowerCase() === norm);
+                const teacherMatch = state.teacherSubjects.find(s => String(s).trim().toLowerCase() === norm);
+                return studentMatch || teacherMatch || norm;
+            });
+            
+            // Use the derived subjects if they're more complete than the mapping
+            if (actualOverlap.length > derivedSubjects.length) {
+                derivedSubjects = actualOverlap;
+            }
+        }
+        
+        return { studentId, studentProfile, subjectsForStudent: derivedSubjects };
     });
 
     try {
         const results = await Promise.all(promises);
 
+        // Now filter based on derived subjects
+        const filtered = results.filter(({ subjectsForStudent }) => {
+            if (selectedSubjectNorm === '__all') return true;
+            // Check if any of the derived subjects match the selected subject (case-insensitive)
+            return subjectsForStudent.some(s => String(s).trim().toLowerCase() === selectedSubjectNorm);
+        });
+
+        if (filtered.length === 0) {
+            classContainer.innerHTML = `<div class="no-classes">No students found for the selected subject.</div>`;
+            setLoading(false);
+            return;
+        }
+
         // create cards
-        results.forEach(({ studentId, studentProfile, subjectsForStudent }) => {
+        filtered.forEach(({ studentId, studentProfile, subjectsForStudent }) => {
             const card = makeStudentCard(studentProfile, subjectsForStudent);
             classContainer.appendChild(card);
         });

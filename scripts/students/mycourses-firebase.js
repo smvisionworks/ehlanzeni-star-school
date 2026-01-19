@@ -73,7 +73,7 @@ async function init() {
 
     // Load courses based on student's subjects
     await fetchStudentCourses(currentUser.uid);
-    initModalListeners();
+ 
 }
 
 async function fetchStudentCourses(userId) {
@@ -258,38 +258,7 @@ function showSubjectResources(subject) {
     showToast(`Resources for ${subject} will be available soon`, 'info');
 }
 
-function initModalListeners() {
-    const logoutModal = document.getElementById('logoutModal');
-    const confirmLogoutBtn = document.getElementById('confirmLogoutBtn');
-    const cancelLogoutBtn = document.getElementById('cancelLogoutBtn');
-    const logoutTriggerBtn = document.getElementById('logoutBtn');
-
-    // Show modal when logout button is clicked
-    logoutTriggerBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        logoutModal.classList.add('active');   // FIXED
-    });
-
-    // Hide modal when cancel button is clicked
-    cancelLogoutBtn.addEventListener('click', () => {
-        logoutModal.classList.remove('active'); // FIXED
-    });
-
-    // Hide modal and perform logout when confirm button is clicked
-    confirmLogoutBtn.addEventListener('click', () => {
-        logoutModal.classList.remove('active'); // FIXED
-        handleLogout();
-    });
-
-    // Hide modal if user clicks outside the card
-    logoutModal.addEventListener('click', (e) => {
-        if (e.target === logoutModal) {
-            logoutModal.classList.remove('active'); // FIXED
-        }
-    });
-}
-
-
+    
 async function handleLogout() {
     try {
         await signOut(auth);

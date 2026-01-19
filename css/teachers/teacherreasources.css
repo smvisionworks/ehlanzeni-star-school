@@ -1,4 +1,5 @@
 /* Teacher Resources Styles - Sidebar Grouping */
+
 :root {
   --primary: #1B3A61;
   --dark-shade: #132945;
@@ -27,6 +28,22 @@ body {
   min-height: 100vh;
 }
 
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('../../src/images/logo1.png');
+    background-size: 50%;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0.05;
+    z-index: -1;
+    pointer-events: none;
+    filter: grayscale(100%);
+}
 /* Sidebar Styles */
 .sidebar {
   width: 280px;
@@ -35,7 +52,7 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 2rem 0;
+  padding: 2rem 0 0 0;
   box-shadow: 2px 0 10px rgba(0,0,0,0.1);
   position: fixed;
   height: 100vh;
@@ -72,13 +89,14 @@ body {
 .nav-links a {
   display: flex;
   align-items: center;
-  padding: 0.9rem 1rem;
+  padding: 1.1rem 1.2rem;
   color: var(--light-shade);
   text-decoration: none;
   border-radius: 8px;
   margin-bottom: 0.5rem;
   transition: all 0.3s ease;
   font-weight: 500;
+  font-size: 1.1rem;
 }
 
 .nav-links a i {
@@ -99,26 +117,6 @@ body {
   font-weight: 600;
 }
 
-.logout {
-  padding: 0 1.5rem;
-}
-
-#logoutBtn {
-  width: 100%;
-  padding: 0.9rem;
-  background: var(--dark-shade);
-  color: white;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 0.95rem;
-  font-weight: 500;
-  transition: all 0.3s ease;
-}
-
-#logoutBtn:hover {
-  background: #0f1e35;
-}
 
 /* Main Content */
 .main-content {
@@ -577,6 +575,12 @@ body {
   background: var(--light-shade);
 }
 
+.file-upload-area.dragover {
+  border-color: var(--accent);
+  background: var(--light-shade);
+  transform: scale(1.02);
+}
+
 .file-upload-area i {
   font-size: 2rem;
   color: var(--text-light);
@@ -594,7 +598,7 @@ body {
   color: var(--text-light);
 }
 
-.file-upload-area input {
+.file-upload-area input[type="file"] {
   display: none;
 }
 
@@ -603,6 +607,9 @@ body {
   color: var(--primary);
   font-weight: 500;
 }
+
+
+
 
 /* Modal Actions */
 .modal-actions {
@@ -628,39 +635,6 @@ body {
   background: #d0dcef;
 }
 
-/* Logout Modal */
-.logout-modal {
-  display: none;
-  position: fixed;
-  z-index: 2000;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0,0,0,0.5);
-  align-items: center;
-  justify-content: center;
-}
-
-.logout-card {
-  background: white;
-  padding: 2rem;
-  border-radius: var(--radius);
-  text-align: center;
-  max-width: 400px;
-  width: 90%;
-}
-
-.logout-card h3 {
-  margin-bottom: 1.5rem;
-  color: var(--primary);
-}
-
-.logout-actions {
-  display: flex;
-  gap: 1rem;
-  justify-content: center;
-}
 
 /* Toast */
 .toast {
@@ -1009,7 +983,39 @@ body {
     width: 100%;
     max-width: 1100px;
 }
-
+.feedback-input {
+  min-width: 180px;
+  flex: 1 1 180px;
+  margin-right: 0.7rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  background: #f4f7fb;
+  border-radius: 8px;
+  padding: 0.7rem 1rem;
+  box-shadow: 0 1px 4px rgba(36,99,212,0.04);
+}.submission-grading-actions {
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  margin-top: 0;
+  min-width: 120px;
+  flex-direction: row;
+  gap: 0.7rem;
+  margin-left: 0.5rem;
+  margin-bottom: 0;
+  margin-top: auto;
+}.submission-grading-content-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  background: #f8fafc;
+  border-radius: 12px;
+  padding: 1.2rem 1.5rem;
+  box-shadow: 0 2px 8px rgba(36,99,212,0.04);
+  flex: 1;
+  min-width: 0;
+}
 
 
 /* -------- Mobile -------- */
@@ -1019,4 +1025,111 @@ body {
         align-items: stretch;
         gap: .8rem;
     }
+}
+/* -------- GRADING ROW LAYOUT -------- */
+
+.submission-row {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.6rem 0.8rem;
+  margin: 0.4rem 0;
+  background: #f9fbff;
+  border: 1px solid #dbeafe;
+  border-radius: 10px;
+  font-size: 0.85rem;
+}
+
+/* STUDENT */
+.submission-student {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 160px;
+}
+
+.submission-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #2563eb;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.student-name {
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+/* FILE */
+.submission-file {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-width: 180px;
+}
+
+.submission-file .file-link {
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 140px;
+}
+
+/* GRADE */
+.submission-grade {
+  width: 70px;
+}
+
+.grade-input {
+  width: 100%;
+  font-size: 0.85rem;
+  padding: 0.3rem 0.4rem;
+  border-radius: 6px;
+  border: 1px solid #dbeafe;
+}
+
+/* FEEDBACK */
+.submission-feedback {
+  flex: 1;
+}
+
+.submission-feedback textarea {
+  width: 100%;
+  min-height: 36px;
+  font-size: 0.8rem;
+  padding: 0.35rem 0.5rem;
+  border-radius: 6px;
+  border: 1px solid #dbeafe;
+  resize: vertical;
+}
+
+/* ACTION */
+.submission-action {
+  min-width: 80px;
+  text-align: right;
+}
+
+.save-grade-btn {
+  padding: 0.35rem 0.8rem;
+  font-size: 0.8rem;
+  border-radius: 6px;
+}
+
+/* MOBILE: STACK NICELY */
+@media (max-width: 900px) {
+  .submission-row {
+    flex-wrap: wrap;
+  }
+
+  .submission-feedback {
+    width: 100%;
+  }
 }

@@ -15,7 +15,6 @@ document.addEventListener('DOMContentLoaded', () => {
     currentUser = user;
     await loadTeacherData();
     await loadClasses();
-    initModalListeners();
   });
 });
 
@@ -192,39 +191,6 @@ function viewClassDetails(classId) {
   showToast('Opening class details...', 'success');
   // Implement class details viewing logic here
   console.log('Viewing details for class:', classId);
-}
-
-// Logout functions
-function initModalListeners() {
-  const logoutModal = document.getElementById('logoutModal');
-  const confirmLogoutBtn = document.getElementById('confirmLogout');
-  const cancelLogoutBtn = document.getElementById('cancelLogout');
-  const logoutTriggerBtn = document.getElementById('logoutBtn');
-
-  logoutTriggerBtn.addEventListener('click', (e) => {
-    e.preventDefault();
-    logoutModal.style.display = 'flex';
-  });
-
-  cancelLogoutBtn.addEventListener('click', () => {
-    logoutModal.style.display = 'none';
-  });
-
-  confirmLogoutBtn.addEventListener('click', () => {
-    logoutModal.style.display = 'none';
-    handleLogout();
-  });
-}
-
-async function handleLogout() {
-  try {
-    await signOut(auth);
-    showToast('Logged out successfully!', 'success');
-    setTimeout(() => window.location.href = '../landing/login.html', 1000);
-  } catch (error) {
-    console.error('Logout error:', error);
-    showToast('Failed to logout: ' + error.message, 'error');
-  }
 }
 
 function showToast(message, type = 'success') {

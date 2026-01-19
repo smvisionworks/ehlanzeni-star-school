@@ -79,11 +79,20 @@ document.getElementById('login-form').addEventListener('submit', async (e) => {
 
 function showToast(message, type = 'info') {
   const toast = document.getElementById('toast');
-  toast.textContent = message;
-  toast.className = 'toast ' + type;
-  toast.style.display = 'block';
+  if (!toast) return;
+
+  const icon = type === 'error' ? '<i class="fas fa-times"></i>' : '<i class="fas fa-info-circle"></i>';
+  toast.innerHTML = `
+    <span class="toast-icon">${icon}</span>
+    <span class="toast-body">
+      <span class="toast-title">${type === 'error' ? 'Login Failed' : 'Notice'}</span>
+      <span>${message}</span>
+    </span>
+  `;
+
+  toast.className = 'toast ' + type + ' show';
 
   setTimeout(() => {
-    toast.style.display = 'none';
-  }, 5000);
+    toast.classList.remove('show');
+  }, 4500);
 }

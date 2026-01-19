@@ -8,6 +8,7 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="shortcut icon" href="/src/images/LOGO1.png" type="image/x-icon">
+  <link rel="stylesheet" href="/css/teachers/teacher-apply.css">
   <style>
     .subject-checkbox:checked+label {
       background-color: #3b82f6;
@@ -42,30 +43,23 @@
 
 <body class="bg-gray-50">
 
-  <header class="bg-white shadow fixed top-0 left-0 w-full z-50 
-    flex flex-col  md:flex-row md:justify-between md:items-center 
-    px-4 md:px-10 py-4 md:py-5 gap-3 md:gap-6 text-center md:text-left">
-
-    <!-- LOGO + TITLE -->
-    <div class="flex items-center justify-center md:justify-start gap-3">
-      <h2 class="text-lg md:text-xl font-bold text-blue-900 border-b-2 border-[#1e90ff] inline-block pb-[5px]">
-        EHLANZENI STAR SCHOOL
-      </h2>
+ <header>
+  <a href="/index.html" class="logo-link">
+    <div class="logo-area">
+      <img src="/src/images/logo1.png" alt="">
+      <h2>EHLANZENI STAR SCHOOL</h2>
     </div>
-
-    <!-- NAV (always horizontal) -->
-    <nav class="flex flex-row flex-wrap justify-center md:justify-end gap-3 md:gap-6 w-full md:w-auto">
-      <a href="/index.html" class="bg-green-700 text-white px-3 py-1.5 md:px-4 md:py-2 rounded 
-              hover:bg-blue-800 font-medium text-sm md:text-base">
-        HOME
-      </a>
-
-      <a href="/landing/login.html" class="bg-blue-700 text-white px-3 py-1.5 md:px-4 md:py-2 rounded 
-              hover:bg-blue-800 font-medium text-sm md:text-base">
-        LOGIN
-      </a>
-    </nav>
-  </header>
+  </a>
+  <button class="nav-toggle" aria-label="Toggle navigation">
+      <i class="fas fa-chevron-down"></i>
+  </button>
+  <nav>
+    <a href="/landing/programs.html">PROGRAMS</a>
+    <a href="/landing/admissions.html">ADMISSIONS</a>
+    <a href="/landing/contact.html">CONTACT</a>
+    <a href="/landing/login.html" class="login-symbol-link"><i class="fas fa-user-circle"></i></a>
+  </nav>
+</header>
 
 
   <section class="bg-blue-900 text-white py-12 mt-20">
@@ -102,8 +96,15 @@
           </div>
           <div>
             <label class="block text-gray-700 mb-2">Race *</label>
-            <input type="text" id="race"
+            <select id="race"
               class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+              <option value="">Select Race</option>
+              <option value="African">African</option>
+              <option value="Coloured">Coloured</option>
+              <option value="Indian/Asian">Indian/Asian</option>
+              <option value="White">White</option>
+              <option value="Other">Other</option>
+            </select>
           </div>
         </div>
 
@@ -141,8 +142,18 @@
           <div class="grid grid-cols-1 md:grid-cols-2 gap-2 mb-2">
             <input type="text" id="city" placeholder="City"
               class="px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500" required>
-            <input type="text" id="province" placeholder="State / Province / Region"
-              class="px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+            <select id="province" class="px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+              <option value="">Select Province</option>
+              <option value="Eastern Cape">Eastern Cape</option>
+              <option value="Free State">Free State</option>
+              <option value="Gauteng">Gauteng</option>
+              <option value="KwaZulu-Natal">KwaZulu-Natal</option>
+              <option value="Limpopo">Limpopo</option>
+              <option value="Mpumalanga">Mpumalanga</option>
+              <option value="Northern Cape">Northern Cape</option>
+              <option value="North West">North West</option>
+              <option value="Western Cape">Western Cape</option>
+            </select>
           </div>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
             <input type="text" id="postalCode" placeholder="Postal Code"
@@ -363,7 +374,7 @@
   </div>
 
   <div class="container mx-auto px-4 py-8 text-center">
-    <a href="index.html" class="text-blue-700 hover:text-blue-900 font-medium inline-flex items-center">
+    <a href="/index.html" class="text-blue-700 hover:text-blue-900 font-medium inline-flex items-center">
       <i class="fas fa-arrow-left mr-2"></i> Back to Home
     </a>
   </div>
@@ -399,9 +410,9 @@
 
       <!-- Contact Info -->
       <div class="flex flex-col md:flex-row justify-center items-center gap-4 md:gap-8 mb-8 text-blue-200">
-        <a href="mailto:info@matricsecondchance" class="flex items-center hover:text-white transition-colors duration-300 group">
+        <a href="mailto:ehlanzenistarschool@gmail.com" class="flex items-center hover:text-white transition-colors duration-300 group">
             <i class="fas fa-envelope mr-2 group-hover:text-blue-400"></i>
-            <span>info@matricsecondchance</span>
+            <span>ehlanzenistarschool@gmail.com</span>
         </a>
         <span class="hidden md:inline text-blue-700">•</span>
         <a href="tel:+27135160030" class="flex items-center hover:text-white transition-colors duration-300 group">
@@ -428,9 +439,13 @@
     </div>
   </footer>
 
+
+
+
   <div id="toast" class="toast"></div>
 
   <script type="module" src="/scripts/teachers/teacher-apply.js"></script>
+  <script src="/scripts/logout.js"></script>
 
 </body>
 

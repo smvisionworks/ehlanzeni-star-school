@@ -75,7 +75,6 @@ async function init() {
     // Load grades and initialize filters
     await fetchGrades(currentUser.uid);
     initFilters();
-    initModalListeners();
 }
 
 function initFilters() {
@@ -335,37 +334,7 @@ function closeFeedbackModal() {
     document.getElementById('feedbackModal').classList.remove('show');
 }
 
-function initModalListeners() {
-    const logoutModal = document.getElementById('logoutModal');
-    const confirmLogoutBtn = document.getElementById('confirmLogoutBtn');
-    const cancelLogoutBtn = document.getElementById('cancelLogoutBtn');
-    const logoutTriggerBtn = document.getElementById('logoutBtn');
 
-    logoutTriggerBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        logoutModal.classList.add('show');
-    });
-
-    cancelLogoutBtn.addEventListener('click', () => {
-        logoutModal.classList.remove('show');
-    });
-
-    confirmLogoutBtn.addEventListener('click', () => {
-        logoutModal.classList.remove('show');
-        handleLogout();
-    });
-
-    // Close modal when clicking outside
-    window.addEventListener('click', (e) => {
-        const feedbackModal = document.getElementById('feedbackModal');
-        if (e.target === feedbackModal) {
-            closeFeedbackModal();
-        }
-        if (e.target === logoutModal) {
-            logoutModal.classList.remove('show');
-        }
-    });
-}
 
 async function handleLogout() {
     try {

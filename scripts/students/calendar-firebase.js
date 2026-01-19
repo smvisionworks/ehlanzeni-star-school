@@ -158,7 +158,34 @@ async function fetchEvents(studentId) {
 }
 
 async function renderCalendar() {
-  document.getElementById("calendarTable").innerHTML = '<div>Loading events...</div>';
+  // Show aesthetic loading skeleton
+  document.getElementById("calendarTable").innerHTML = `
+    <div class="calendar-loading">
+      <div class="loading-header">
+        <div class="skeleton skeleton-text" style="width: 60%; height: 24px; margin-bottom: 20px;"></div>
+      </div>
+      <table class="skeleton-calendar">
+        <tr>
+          <th><div class="skeleton skeleton-day"></div></th>
+          <th><div class="skeleton skeleton-day"></div></th>
+          <th><div class="skeleton skeleton-day"></div></th>
+          <th><div class="skeleton skeleton-day"></div></th>
+          <th><div class="skeleton skeleton-day"></div></th>
+          <th><div class="skeleton skeleton-day"></div></th>
+          <th><div class="skeleton skeleton-day"></div></th>
+        </tr>
+        ${Array(5).fill(0).map(() => `
+          <tr>
+            ${Array(7).fill(0).map(() => `
+              <td>
+                <div class="skeleton skeleton-cell"></div>
+              </td>
+            `).join('')}
+          </tr>
+        `).join('')}
+      </table>
+    </div>
+  `;
 
   if (!currentUser) return;
 
@@ -248,10 +275,53 @@ function closeModal() {
 }
 
 function showToast(message, type = 'success') {
-  const toast = document.getElementById('toast');
-  toast.textContent = message;
-  toast.className = `toast ${type} show`;
-  setTimeout(() => toast.className = `toast ${type}`, 3000);
+  let toast = document.getElementById('toast');
+  
+  if (!toast) {
+    toast = document.createElement('div');
+    toast.id = 'toast';
+    toast.style.cssText = `
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 16px;
+      border-radius: 8px;
+      background: rgba(30, 30, 30, 0.95);
+      backdrop-filter: blur(10px);
+      border-left: 4px solid rgba(255, 255, 255, 0.5);
+      color: white;
+      font-weight: 500;
+      z-index: 9999;
+      opacity: 0;
+      transition: opacity 0.3s;
+      max-width: 400px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    `;
+    document.body.appendChild(toast);
+  }
+  
+  const icon = type === 'success' 
+    ? '<i class="fas fa-check-circle"></i>' 
+    : '<i class="fas fa-exclamation-triangle"></i>';
+  const title = type === 'success' ? 'Success' : 'Error';
+  const borderColor = type === 'success' ? '#4CAF50' : '#f44336';
+  
+  toast.innerHTML = `
+    <span style="display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 50%; background: ${borderColor}; flex-shrink: 0;">
+      ${icon}
+    </span>
+    <span style="display: flex; flex-direction: column; gap: 4px;">
+      <span style="font-weight: 600; font-size: 14px;">${title}</span>
+      <span style="font-size: 13px; opacity: 0.9;">${message}</span>
+    </span>
+  `;
+  toast.style.borderLeftColor = borderColor;
+  toast.style.opacity = '1';
+  
+  setTimeout(() => { toast.style.opacity = '0'; }, 4000);
 }
 
 function initMobileMenu() {
