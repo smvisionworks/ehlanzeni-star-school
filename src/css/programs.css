@@ -1,0 +1,388 @@
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Verdana, sans-serif;
+      background: #f9fafc;
+      color: #002060;
+      line-height: 1.7;
+    }
+
+    /* HEADER */
+    header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.97);
+      padding: 15px 40px;
+      box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+      z-index: 1000;
+      transition: all 0.3s ease;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      gap: 15px;
+      box-sizing: border-box;
+    }
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    
+    .logo-link {
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      transition: transform 0.3s ease;
+      color: inherit;
+    }
+
+    .logo-link:hover {
+      transform: scale(1.02);
+    }
+    .logo-area img {
+      height: 45px;
+      transition: transform 0.3s;
+    }
+    .logo-area h2 {
+      margin: 0;
+      font-size: 1.5rem;
+      letter-spacing: 1.5px;
+      font-weight: bold;
+      color: #002060;
+      border-bottom: 2px solid #1e90ff;
+      display: inline-block;
+      padding-bottom: 5px;
+    }
+    nav {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-left: auto;
+      padding-right: 10px;
+    }
+    nav a {
+      text-decoration: none;
+      color: #002060;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      position: relative;
+      font-size: 0.95rem;
+      padding: 8px 36px;
+      border-radius: 20px;
+      border: 2px solid transparent;
+      transition: all 0.3s ease;
+    }
+    nav a:hover {
+      color: #1e90ff;
+      border-color: #1e90ff;
+      background: rgba(30, 144, 255, 0.08);
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+      transform: translateY(-2px);
+    }
+    .login-symbol-link {
+        text-decoration: none;
+        color: #002060;
+        font-size: 1.5rem;
+        padding: 8px 12px;
+        border-radius: 50%;
+        transition: all 0.3s;
+    }
+
+    .login-symbol-link:hover {
+        background-color: #eef4f8;
+        color: #1e90ff;
+        transform: scale(1.1);
+    }
+
+    .nav-toggle {
+        display: none;
+        background: transparent;
+        border: none;
+        color: #002060;
+        font-size: 1.5rem;
+        cursor: pointer;
+        padding: 5px;
+        transition: transform 0.3s ease;
+        margin-top: 5px;
+    }
+
+    /* HERO */
+    .hero {
+      background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),
+        url("/src/images/IMG_7329.webp") no-repeat center/cover;
+      height: 60vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      text-align: center;
+      padding: 0 20px;
+      margin-top: 80px;
+    }
+    .hero h1 {
+      font-size: 3rem;
+      margin-bottom: 15px;
+      text-shadow: 0 3px 8px rgba(0,0,0,0.4);
+    }
+    .hero p {
+      font-size: 1.2rem;
+      max-width: 600px;
+      color: #f5f5f5;
+    }
+
+    /* BACK TO HOME */
+    .back-home {
+      text-align: center;
+      margin: 30px 0;
+    }
+    .back-home a {
+      display: inline-block;
+      padding: 10px 20px;
+      background: #002060;
+      color: white;
+      border-radius: 25px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: background 0.3s, transform 0.3s;
+    }
+    .back-home a:hover {
+      background: #1e90ff;
+      transform: translateY(-2px);
+    }
+
+    /* PROGRAMS GRID */
+    .programs {
+      padding: 40px 40px 80px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 35px;
+      background: #fff;
+    }
+    .program-card {
+      position: relative;
+      background: #fff;
+      border-radius: 14px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+      overflow: hidden;
+      transition: transform 0.3s, box-shadow 0.3s;
+      cursor: pointer;
+    }
+    .program-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 12px 28px rgba(0,0,0,0.18);
+    }
+    .program-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+    .program-card h3 {
+      margin: 20px;
+      color: #002060;
+    }
+    .program-card p {
+      margin: 0 20px 20px;
+      font-size: 0.95rem;
+      color: #444;
+    }
+
+    /* HOVER OVERLAY */
+    .overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(30, 144, 255, 0.95);
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      font-size: 0.9rem;
+      line-height: 1.6;
+      opacity: 0;
+      transition: opacity 0.4s ease-in-out;
+      text-align: center;
+    }
+    .overlay p {
+      color: white !important; /* force overlay text to white */
+    }
+    .program-card:hover .overlay {
+      opacity: 1;
+    }
+
+    /* FOOTER */
+    footer {
+      background: #002060;
+      color: white;
+      padding: 20px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.9rem;
+      flex-wrap: wrap;
+    }
+    footer .powered {
+      font-style: italic;
+    }
+
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 2.2rem; }
+      nav { margin-left: 0; justify-content: center; }
+    }
+
+
+    /* ───────────────────────────────────────────────
+   RESPONSIVE: TABLETS & SMALL LAPTOPS
+   ─────────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .hero h1 {
+    font-size: 2.6rem;
+  }
+}
+
+
+
+/* ───────────────────────────────────────────────
+   RESPONSIVE: MOBILE DEVICES
+   ─────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  header {
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    padding: 16px 20px;
+    gap: 12px;
+    align-items: center;
+  }
+
+  .logo-area {
+    justify-content: center;
+    text-align: center;
+  }
+
+  header h2 {
+    font-size: 1.2rem;
+  }
+
+  .nav-toggle {
+    display: block;
+  }
+
+  nav {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-left: 0;
+    gap: 15px;
+    width: 100%;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: rgba(255, 255, 255, 0.98);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    padding: 20px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+    z-index: -1;
+    box-sizing: border-box;
+  }
+
+  nav.open {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  nav a {
+    width: 100%;
+    text-align: center;
+    margin: 0;
+    font-size: 1rem;
+    padding: 12px;
+    border-bottom: 1px solid #f0f0f0;
+    box-sizing: border-box;
+  }
+
+  nav a:last-child {
+    border-bottom: none;
+  }
+
+  /* HERO */
+  .hero {
+    height: 45vh;
+    margin-top: 130px; /* because header is now taller */
+    padding: 0 10px;
+  }
+
+  .hero h1 {
+    font-size: 1.9rem;
+  }
+
+  .hero p {
+    font-size: 1rem;
+  }
+
+  /* PROGRAM CARDS */
+  .programs {
+    padding: 25px 20px 60px;
+    gap: 25px;
+  }
+
+  .program-card img {
+    height: 170px;
+  }
+
+  .program-card h3 {
+    font-size: 1.1rem;
+    margin: 16px;
+  }
+
+  .program-card p {
+    font-size: 0.9rem;
+    margin: 0 16px 16px;
+  }
+
+  .overlay {
+    font-size: 0.85rem;
+    padding: 15px;
+  }
+
+  /* FOOTER */
+  footer {
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+    padding: 20px 15px;
+  }
+}
+
+
+
+/* ───────────────────────────────────────────────
+   EXTRA SMALL MOBILE PHONES
+   ─────────────────────────────────────────────── */
+@media (max-width: 480px) {
+  .hero {
+    height: 50vh;
+    margin-top: 140px;
+  }
+
+  .hero h1 {
+    font-size: 1.6rem;
+  }
+
+  .program-card img {
+    height: 150px;
+  }
+
+  footer {
+    font-size: 0.8rem;
+  }
+}

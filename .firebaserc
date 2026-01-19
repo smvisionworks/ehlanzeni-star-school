@@ -1,0 +1,15 @@
+{
+  "projects": {
+    "default": "ehlazeni-star-school"
+  },
+  "targets": {
+    "ehlazeni-star-school": {
+      "hosting": {
+        "student": [
+          "ehlanzeni-student"
+        ]
+      }
+    }
+  },
+  "etags": {}
+}

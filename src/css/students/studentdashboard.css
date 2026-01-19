@@ -1,0 +1,582 @@
+/* Student Dashboard Styles - Ehlanzeni Star School */
+@keyframes slideInFromLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+:root {
+    --primary: #1B3A61;
+    --dark-shade: #132945;
+    --light-shade: #E3EAF5;
+    --accent: #D4A024;
+    --background: #FFFFFF;
+    --text-dark: #333333;
+    --text-light: #666666;
+    --border: #E0E0E0;
+    --success: #28a745;
+    --warning: #ffc107;
+    --danger: #dc3545;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--background);
+    color: var(--text-dark);
+    line-height: 1.6;
+    display: flex;
+    min-height: 100vh;
+    position: relative;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('../../src/images/logo1.png');
+    background-size: 50%;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0.05;
+    z-index: -1;
+    pointer-events: none;
+    filter: grayscale(100%);
+}
+
+.sidebar {
+    animation: slideInFromLeft 0.6s ease-out;
+}
+
+.main-content {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+.card {
+    animation: fadeInUp 0.5s ease-out backwards;
+}
+
+.card:nth-child(1) {
+    animation-delay: 0.2s;
+}
+
+.card:nth-child(2) {
+    animation-delay: 0.3s;
+}
+
+.card:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+/* Sidebar Styles */
+.sidebar {
+    width: 280px;
+    background: var(--primary);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 2rem 0;
+    box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+    position: fixed;
+    height: 100vh;
+    z-index: 1000;
+}
+
+.profile {
+    text-align: center;
+    padding: 0 1.5rem 2rem;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    margin-bottom: 1.5rem;
+}
+
+.profile-icon {
+    width: 70px;
+    height: 70px;
+    background: var(--dark-shade);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+    font-size: 1.8rem;
+}
+
+.profile h3 {
+    font-size: 1.2rem;
+    margin-bottom: 0.25rem;
+    font-weight: 600;
+}
+
+.profile p {
+    color: var(--light-shade);
+    font-size: 0.9rem;
+}
+
+.nav-links {
+    padding: 0 1rem;
+}
+
+.nav-links a {
+    display: flex;
+    align-items: center;
+    padding: 0.9rem 1rem;
+    color: var(--light-shade);
+    text-decoration: none;
+    border-radius: 8px;
+    margin-bottom: 0.5rem;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.nav-links a i {
+    margin-right: 0.75rem;
+    font-size: 1.1rem;
+    width: 20px;
+    text-align: center;
+}
+
+.nav-links a:hover {
+    background: rgba(255,255,255,0.1);
+    color: white;
+}
+
+.nav-links a.active {
+    background: var(--accent);
+    color: var(--dark-shade);
+    font-weight: 600;
+}
+
+
+/* Main Content */
+.main-content {
+    flex: 1;
+    margin-left: 280px;
+    padding: 2rem;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.main-content h1 {
+    color: var(--primary);
+    margin-bottom: 2rem;
+    font-weight: 600;
+    font-size: 2rem;
+}
+
+/* Dashboard Grid */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+}
+
+.card h3 {
+    color: var(--primary);
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-bottom: 2px solid var(--light-shade);
+    padding-bottom: 0.5rem;
+}
+
+/* Bar Graph Styles */
+.bar-graph {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.bar-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.bar-item .label {
+    min-width: 120px;
+    font-size: 0.9rem;
+    color: var(--text-light);
+    font-weight: 500;
+}
+
+.bar {
+    flex: 1;
+    height: 24px;
+    background: var(--light-shade);
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+}
+
+.bar::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    background: var(--primary);
+    border-radius: 12px;
+    width: 0%;
+    transition: width 1s ease;
+}
+
+/* Loading States */
+.loading-item {
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+.loading-skeleton {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+}
+
+.loading-text {
+    height: 16px;
+    border-radius: 4px;
+}
+
+.loading-bar {
+    height: 24px;
+    border-radius: 12px;
+}
+
+@keyframes loading {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 2rem 0 1rem;
+    color: var(--text-light);
+    font-size: 0.9rem;
+    margin-top: auto;
+    border-top: 1px solid var(--border);
+}
+/* Notification Panel */
+.notification-panel {
+    position: fixed;
+    top: 0;
+    right: -400px;       /* start off-screen */
+    width: 380px;        /* panel width */
+    max-width: 90%;      /* responsive for smaller screens */
+    height: 100vh;
+    background: white;
+    box-shadow: -2px 0 12px rgba(0,0,0,0.15);
+    transition: right 0.3s ease;
+    z-index: 2000;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Panel visible */
+.notification-panel.active {
+    right: 0;  
+    margin-top: 30px;          /* slide in fully */
+}
+
+/* Header styling */
+.notif-header {
+    padding: 1.5rem;
+    background: var(--primary);
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 80px;
+
+}
+
+.notif-header h2 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 0.25rem;
+}
+
+/* Body scrollable */
+.notif-body {
+    flex: 1;
+    padding: 1rem;
+    overflow-y: auto;
+}
+
+/* Individual notifications */
+.notification-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem;
+    border-bottom: 1px solid var(--border);
+    transition: background 0.2s ease;
+}
+
+.notification-item:hover {
+    background: var(--light-shade);
+}
+
+.notification-item i {
+    color: var(--accent);
+    font-size: 0.8rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .notification-panel {
+        width: 100%;
+        right: -100%;  /* hidden off-screen */
+    }
+    .notification-panel.active {
+        right: 0;
+    }
+}
+
+
+/* Modal Styles */
+
+/* Toast Notifications */
+.toast {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    padding: 1rem 1.5rem;
+    background: var(--primary);
+    color: white;
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    transform: translateY(100px);
+    opacity: 0;
+    transition: all 0.3s ease;
+    z-index: 4000;
+}
+
+.toast.show {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .sidebar {
+        width: 250px;
+    }
+    
+    .main-content {
+        margin-left: 250px;
+    }
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+    }
+    
+    .sidebar.active {
+        transform: translateX(0);
+    }
+    
+    .main-content {
+        margin-left: 0;
+        padding: 1rem;
+    }
+    
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .notification-panel {
+        width: 100%;
+        right: -100%;
+    }
+}
+
+/* Add these to your existing CSS */
+
+.summary-text {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid var(--border);
+    font-size: 0.9em;
+    color: var(--text-light);
+    text-align: center;
+}
+
+.summary-text strong {
+    color: var(--primary);
+}
+
+.no-data {
+    text-align: center;
+    color: var(--text-light);
+    font-style: italic;
+    padding: 20px;
+}
+
+.error {
+    text-align: center;
+    color: var(--danger);
+    padding: 20px;
+}
+
+/* Bar fill colors based on type */
+.bar-fill.resources {
+    background: var(--primary);
+}
+
+.bar-fill.assignments-pending {
+    background: var(--warning);
+}
+
+.bar-fill.assignments-submitted {
+    background: var(--success);
+}
+
+.bar-fill.grades {
+    background: linear-gradient(90deg, var(--danger), var(--warning), var(--success));
+}
+
+.bar-fill.events {
+    background: var(--accent);
+}
+
+/* Notification types */
+.notification-item.success {
+    border-left: 4px solid var(--success);
+}
+
+.notification-item.warning {
+    border-left: 4px solid var(--warning);
+}
+
+.notification-item.info {
+    border-left: 4px solid var(--primary);
+}
+
+
+/* Responsive off-canvas sidebar (pure CSS) */
+.sidebar {
+  width: 250px; /* desktop width */
+  transition: transform 0.22s ease, box-shadow 0.2s ease;
+  /* keep original layout for desktop */
+}
+
+/* On small screens, move the sidebar off-canvas */
+@media (max-width: 767px) {
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    transform: translateX(-100%);
+    z-index: 1000;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+    overflow-y: auto;
+  }
+
+  /* when open, add the 'open' class to show sidebar */
+  .sidebar.open {
+    transform: translateX(0);
+  }
+
+  /* main content should not have left padding on mobile */
+  .main-content {
+    padding-left: 1rem; /* or whatever default small padding you want */
+  }
+
+  /* burger button */
+.mobile-burger {
+  display: block;
+  position: fixed;
+  bottom: 1.2rem;   /* distance from bottom */
+  right: 1.2rem;    /* distance from right */
+  z-index: 1100;
+  background: #fff;
+  border-radius: 50%; /* round floating button look */
+  padding: 0.75rem;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.18);
+  border: none;
+}
+
+
+  /* overlay */
+  .sidebar-overlay {
+    display: none;
+  }
+  .sidebar-overlay.show {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+    z-index: 900;
+  }
+}
+/* hide the burger on wider screens */
+@media (min-width: 768px) {
+  .mobile-burger { display: none; }
+}
+
+
+
+html, body {
+    transform: none !important;
+    perspective: none !important;
+    backface-visibility: visible !important;
+}

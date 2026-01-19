@@ -1,0 +1,548 @@
+/* My Courses Styles - Ehlanzeni Star School */
+@keyframes slideInFromLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+:root {
+    --primary: #1B3A61;
+    --dark-shade: #132945;
+    --light-shade: #E3EAF5;
+    --accent: #D4A024;
+    --background: #FFFFFF;
+    --text-dark: #333333;
+    --text-light: #666666;
+    --border: #E0E0E0;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--background);
+    color: var(--text-dark);
+    line-height: 1.6;
+    display: flex;
+    min-height: 100vh;
+    position: relative;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('../../src/images/logo1.png');
+    background-size: 50%;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0.05;
+    z-index: -1;
+    pointer-events: none;
+    filter: grayscale(100%);
+}
+
+
+.sidebar {
+    animation: slideInFromLeft 0.6s ease-out;
+}
+
+.main-content {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+.course-card {
+    animation: fadeInUp 0.5s ease-out backwards;
+}
+
+.course-card:nth-child(1) {
+    animation-delay: 0.2s;
+}
+
+.course-card:nth-child(2) {
+    animation-delay: 0.3s;
+}
+
+.course-card:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+.course-card:nth-child(4) {
+    animation-delay: 0.5s;
+}
+
+/* Common Sidebar Styles */
+.sidebar {
+    width: 280px;
+    background: var(--primary);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 2rem 0;
+    box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+    position: fixed;
+    height: 100vh;
+    z-index: 1000;
+}
+
+.profile {
+    text-align: center;
+    padding: 0 1.5rem 2rem;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    margin-bottom: 1.5rem;
+}
+
+.profile-icon {
+    width: 70px;
+    height: 70px;
+    background: var(--dark-shade);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+    font-size: 1.8rem;
+}
+
+.profile h3 {
+    font-size: 1.2rem;
+    margin-bottom: 0.25rem;
+    font-weight: 600;
+}
+
+.profile p {
+    color: var(--light-shade);
+    font-size: 0.9rem;
+}
+
+.nav-links {
+    padding: 0 1rem;
+}
+
+.nav-links a {
+    display: flex;
+    align-items: center;
+    padding: 0.9rem 1rem;
+    color: var(--light-shade);
+    text-decoration: none;
+    border-radius: 8px;
+    margin-bottom: 0.5rem;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.nav-links a i {
+    margin-right: 0.75rem;
+    font-size: 1.1rem;
+    width: 20px;
+    text-align: center;
+}
+
+.nav-links a:hover {
+    background: rgba(255,255,255,0.1);
+    color: white;
+}
+
+.nav-links a.active {
+    background: var(--accent);
+    color: var(--dark-shade);
+    font-weight: 600;
+}
+
+/* Main Content */
+.main-content {
+    flex: 1;
+    margin-left: 280px;
+    padding: 2rem;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.main-content h1 {
+    color: var(--primary);
+    margin-bottom: 1.5rem;
+    font-size: 2rem;
+    font-weight: 700;
+}
+/* Courses Container */
+.courses {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 1.5rem;
+}
+
+.course-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.75rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    position: relative;
+    overflow: hidden;
+}
+
+.course-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: var(--accent);
+}
+
+.course-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+    border-color: var(--primary);
+}
+
+.course-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+.course-icon {
+    width: 50px;
+    height: 50px;
+    background: var(--light-shade);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    color: var(--primary);
+}
+
+.course-code {
+    background: var(--light-shade);
+    color: var(--primary);
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.course-card h3 {
+    color: var(--primary);
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    font-size: 1.2rem;
+}
+
+.course-instructor {
+    color: var(--text-light);
+    font-size: 0.95rem;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.course-meta {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    padding: 1rem 0;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+}
+
+.meta-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.meta-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 0.25rem;
+}
+
+.meta-label {
+    font-size: 0.8rem;
+    color: var(--text-light);
+    font-weight: 500;
+}
+
+.course-description {
+    color: var(--text-light);
+    font-size: 0.95rem;
+    margin-bottom: 1rem;
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.course-status {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.course-status.enrolled {
+    background: rgba(40, 167, 69, 0.1);
+    color: #28a745;
+}
+
+.course-status.pending {
+    background: rgba(255, 193, 7, 0.1);
+    color: #d39e00;
+}
+
+.course-teacher {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: var(--text-light);
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+    font-weight: 500;
+}
+
+.course-teacher i {
+    color: var(--accent);
+}
+
+.enrolled-overlay {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    width: 100%;
+    padding: 14px;
+    background: var(--primary);
+    color: white;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    margin-top: 1.5rem;
+    box-shadow: 0 4px 12px rgba(27, 58, 97, 0.2);
+    text-align: center;
+}
+
+.enrolled-overlay:hover {
+    background: var(--dark-shade);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(27, 58, 97, 0.3);
+}
+
+.enrolled-overlay i {
+    transition: transform 0.3s ease;
+}
+
+.enrolled-overlay:hover i {
+    transform: translateX(4px);
+}
+
+.pending-message {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 12px;
+    background: #fff8e1;
+    color: #b7860b;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-top: auto;
+}
+
+/* Loading States */
+.loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 3rem;
+}
+
+.loading-circle {
+    width: 50px;
+    height: 50px;
+    border: 4px solid var(--light-shade);
+    border-top: 4px solid var(--primary);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 2rem 0 1rem;
+    color: var(--text-light);
+    font-size: 0.9rem;
+    margin-top: auto;
+    border-top: 1px solid var(--border);
+}
+
+/* Toast */
+.toast {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    padding: 1rem 1.5rem;
+    background: var(--primary);
+    color: white;
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    transform: translateY(100px);
+    opacity: 0;
+    transition: all 0.3s ease;
+    z-index: 4000;
+}
+
+.toast.show {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .sidebar {
+        width: 250px;
+    }
+    
+    .main-content {
+        margin-left: 250px;
+    }
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+    }
+    
+    .sidebar.active {
+        transform: translateX(0);
+    }
+    
+    .main-content {
+        margin-left: 0;
+        padding: 1rem;
+    }
+    
+    .courses {
+        grid-template-columns: 1fr;
+    }
+    
+    .course-meta {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+    }
+    
+    .course-actions {
+        flex-direction: column;
+    }
+}
+
+
+/* Responsive off-canvas sidebar (pure CSS) */
+.sidebar {
+  width: 250px; /* desktop width */
+  transition: transform 0.22s ease, box-shadow 0.2s ease;
+  /* keep original layout for desktop */
+}
+
+/* On small screens, move the sidebar off-canvas */
+@media (max-width: 767px) {
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    transform: translateX(-100%);
+    z-index: 1000;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+    overflow-y: auto;
+  }
+
+  /* when open, add the 'open' class to show sidebar */
+  .sidebar.open {
+    transform: translateX(0);
+  }
+
+  /* main content should not have left padding on mobile */
+  .main-content {
+    padding-left: 1rem; /* or whatever default small padding you want */
+  }
+
+   /* burger button */
+.mobile-burger {
+  display: block;
+  position: fixed;
+  bottom: 1.2rem;   /* distance from bottom */
+  right: 1.2rem;    /* distance from right */
+  z-index: 1100;
+  background: #fff;
+  border-radius: 50%; /* round floating button look */
+  padding: 0.75rem;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.18);
+  border: none;
+}
+
+
+  /* overlay */
+  .sidebar-overlay {
+    display: none;
+  }
+  .sidebar-overlay.show {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+    z-index: 900;
+  }
+}
+/* hide the burger on wider screens */
+@media (min-width: 768px) {
+  .mobile-burger { display: none; }
+}

@@ -1,8 +1,0 @@
-Main Color: #2A4D9B
-
-Purpose	Hex
-Main / Primary	#2A4D9B
-Dark Shade	#1E3670
-Light Shade	#D7E1F7
-Accent (Gold)	#C89B3C
-Background White	#FFFFFF
