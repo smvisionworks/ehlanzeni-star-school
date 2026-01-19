@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grades - Ehlanzeni Star School</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="shortcut icon" href="/assets/LOGO1-owCRzRHS.webp" type="image/x-icon">
+  <script type="module" crossorigin src="/assets/studentGrades-C8vyZNkt.js"></script>
+  <link rel="modulepreload" crossorigin href="/assets/firebase-B3bAttLw.js">
+  <link rel="modulepreload" crossorigin href="/assets/global-floating-logout-Em6X96d7.js">
+  <link rel="stylesheet" crossorigin href="/assets/studentGrades-FsrDSKNj.css">
+</head>
+
+<body>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div>
+            <div class="profile">
+                <div class="profile-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h3 id="studentName">Loading...</h3>
+                <p>Student</p>
+            </div>
+
+            <div class="nav-links">
+                <a href="studentdashboard.html"><i class="fas fa-home"></i> Dashboard</a>
+                <a href="mycourses.html"><i class="fas fa-book"></i> My Subjects</a>
+                <a href="grades.html" class="active"><i class="fas fa-graduation-cap"></i> Grades</a>
+                <a href="calendar.html"><i class="fas fa-calendar-alt"></i> Calendar</a>
+                <a href="resources.html"><i class="fas fa-folder"></i> Resources</a>
+            </div>
+        </div>
+
+
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <h1>My Grades</h1>
+
+        <!-- Filters -->
+        <div class="grades-filters">
+            <div class="filter-group">
+                <label for="courseFilter">Filter by Subjects:</label>
+                <select id="courseFilter">
+                    <option value="all">All Subjects</option>
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label for="searchAssignments">Search Assignments:</label>
+                <input type="text" id="searchAssignments" placeholder="Search assignments..." class="search-box">
+            </div>
+        </div>
+
+        <!-- Grades Container -->
+        <div class="grades" id="grades-container">
+            <div class="no-grades">Loading grades...</div>
+        </div>
+
+        <footer>
+            <div>© 2026 EHLANZENI STAR SCHOOL. All rights reserved.</div>
+            <div class="powered">Developed by <a href="https://smvisionworks.com" target="_blank"
+                    style="color: #60a5fa; text-decoration: none;" onmouseover="this.style.textDecoration='underline';"
+                    onmouseout="this.style.textDecoration='none';">SM VISION WORKS</a></div>
+        </footer>
+    </div>
+
+    <!-- Feedback Modal -->
+    <div id="feedbackModal" class="modal">
+        <div class="modal-content">
+            <div id="feedbackContent"></div>
+            <div class="modal-actions">
+                <button type="button" class="cancel-btn" onclick="closeFeedbackModal()">Close</button>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div id="toast" class="toast"></div>
+
+    <script>
+
+        /* Small toggle script for pure-CSS responsive sidebar */
+        (function () {
+            // create burger button and overlay only on mobile-capable screens
+            const burger = document.createElement('button');
+            burger.className = 'mobile-burger';
+            burger.setAttribute('aria-label', 'Open menu');
+            burger.innerHTML = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>';
+            document.body.insertAdjacentElement('afterbegin', burger);
+
+            const overlay = document.createElement('div');
+            overlay.className = 'sidebar-overlay';
+            document.body.appendChild(overlay);
+
+            const sidebar = document.querySelector('.sidebar');
+
+            if (!sidebar) return;
+
+            function open() {
+                sidebar.classList.add('open');
+                overlay.classList.add('show');
+                burger.setAttribute('aria-expanded', 'true');
+            }
+            function close() {
+                sidebar.classList.remove('open');
+                overlay.classList.remove('show');
+                burger.setAttribute('aria-expanded', 'false');
+            }
+
+            burger.addEventListener('click', function () {
+                if (sidebar.classList.contains('open')) close(); else open();
+            });
+            overlay.addEventListener('click', close);
+
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'Escape') close();
+            });
+
+            // ensure consistent state on resize
+            window.addEventListener('resize', function () {
+                if (window.innerWidth >= 768) {
+                    sidebar.classList.remove('open');
+                    overlay.classList.remove('show');
+                    burger.setAttribute('aria-expanded', 'false');
+                }
+            });
+        })();
+    </script>
+</body>
+
+</html>

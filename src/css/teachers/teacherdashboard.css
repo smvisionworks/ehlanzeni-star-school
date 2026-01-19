@@ -28,7 +28,7 @@ body::before {
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: url('../../src/images/logo1.png');
+    background-image: url('../../src/images/logo1.webp');
     background-size: 50%;
     background-repeat: no-repeat;
     background-position: center;

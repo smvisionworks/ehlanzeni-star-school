@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admissions - Ehlanzeni Star School</title>
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+ <link rel="shortcut icon" href="/assets/LOGO1-owCRzRHS.webp" type="image/x-icon">
+  <link rel="stylesheet" crossorigin href="/assets/admissions-5odgEpbk.css">
+</head>
+<body>
+
+<header>
+  <a href="/index.html" class="logo-link">
+    <div class="logo-area">
+      <img src="/assets/LOGO1-owCRzRHS.webp" alt="">
+      <h2>EHLANZENI STAR SCHOOL</h2>
+    </div>
+  </a>
+  <button class="nav-toggle" aria-label="Toggle navigation">
+      <i class="fas fa-chevron-down"></i>
+  </button>
+  <nav>
+    <a href="/landing/programs.html">PROGRAMS</a>
+    <a href="/landing/admissions.html">ADMISSIONS</a>
+    <a href="/landing/contact.html">CONTACT</a>
+    <a href="/landing/login.html" class="login-symbol-link"><i class="fas fa-user-circle"></i></a>
+  </nav>
+</header>
+
+<section class="hero">
+  <h1>Join Ehlanzeni Star School</h1>
+  <p>Take the first step towards unlocking your future with our proven programs and dedicated support.</p>
+</section>
+
+<div class="back-home">
+  <a href="/index.html">← Back to Home</a>
+</div>
+
+<section class="steps">
+  <div class="step">
+    <div class="step-icon"><i class="fas fa-laptop-medical"></i></div>
+    <h3>Step 1: Apply Online</h3>
+    <p>Complete our online admission form with your personal and educational details.</p>
+  </div>
+  <div class="step">
+    <div class="step-icon"><i class="fas fa-door-open"></i></div>
+    <h3>Step 2: Application Room</h3>
+    <p>Log in immediately to access the Application Room, where you can track your status and update your details.</p>
+  </div>
+  <div class="step">
+    <div class="step-icon"><i class="fas fa-envelope-open-text"></i></div>
+    <h3>Step 3: Verification & Payment</h3>
+    <p>Our admin team will contact you via email to arrange payment and request any outstanding documents.</p>
+  </div>
+  <div class="step">
+    <div class="step-icon"><i class="fas fa-user-graduate"></i></div>
+    <h3>Step 4: Approval & Access</h3>
+    <p>Once approved, your next login will grant you full access to the student portal to begin your learning journey.</p>
+  </div>
+</section>
+
+<section class="requirements">
+  <h2>Admission Requirements</h2>
+  <ul>
+    <li>Completed application form</li>
+    <li>Certified copy of ID or birth certificate</li>
+    <li>Latest academic results or statement of results</li>
+    <li>Proof of payment of registration fee</li>
+    <li>Two passport-size photos</li>
+  </ul>
+  <a href="apply.html" class="apply-btn">Apply Now</a>
+</section>
+
+<footer>
+    <div class="footer-bg-pattern">
+        <img src="/assets/LOGO1-owCRzRHS.webp" alt="">
+    </div>
+    <div class="footer-bg-overlay"></div>
+
+    <div class="footer-content">
+        <!-- Social Media -->
+        <div class="footer-social">
+            <a href="https://www.facebook.com/ehlanzenistarschool" target="_blank">
+                <i class="fab fa-facebook-f"></i>
+            </a>
+            <a href="https://wa.me/27822672815" target="_blank">
+                <i class="fab fa-whatsapp"></i>
+            </a>
+        </div>
+
+        <!-- Quick Links -->
+        <div class="footer-links">
+            <a href="/index.html">Home</a>
+            <a href="/landing/programs.html">Programs</a>
+            <a href="/landing/admissions.html">Admissions</a>
+            <a href="/landing/contact.html">Contact</a>
+            <a href="/landing/privacy.html">Privacy Policy</a>
+        </div>
+
+        <!-- Contact Info -->
+        <div class="footer-contact">
+            <a href="mailto:ehlanzenistarschool@gmail.com" class="footer-contact-item">
+                <i class="fas fa-envelope"></i>
+                <span>ehlanzenistarschool@gmail.com</span>
+            </a>
+            <span class="footer-contact-separator">•</span>
+            <a href="tel:+27135160030" class="footer-contact-item">
+                <i class="fas fa-phone-alt"></i>
+                <span>+27 13 516 0030</span>
+            </a>
+            <span class="footer-contact-separator">•</span>
+            <div class="footer-contact-item" style="cursor: default;">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>10 Henshall Street, Nelspruit</span>
+            </div>
+        </div>
+
+        <!-- Divider -->
+        <div class="footer-divider"></div>
+
+        <!-- Copyright & Dev -->
+        <div class="footer-copyright">
+            <div>© 2026 EHLANZENI STAR SCHOOL. All rights reserved.</div>
+            <div style="font-size: 0.75rem;">
+                Developed by <a href="https://smvisionworks.com" target="_blank" class="footer-dev-link">SM VISION WORKS</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script>
+    /* Nav toggle script for mobile drawer */
+    const toggle = document.querySelector('.nav-toggle');
+    const nav = document.querySelector('nav');
+    const icon = toggle.querySelector('i');
+
+    if (toggle && nav) {
+        toggle.addEventListener('click', () => {
+            nav.classList.toggle('open');
+            toggle.classList.toggle('open');
+            
+            if (nav.classList.contains('open')) {
+                icon.classList.replace('fa-chevron-down', 'fa-chevron-up');
+            } else {
+                icon.classList.replace('fa-chevron-up', 'fa-chevron-down');
+            }
+        });
+    }
+</script>
+</body>
+</html>

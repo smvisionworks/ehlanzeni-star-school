@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Teacher Resources</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.5.0/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="shortcut icon" href="/assets/LOGO1-owCRzRHS.webp" type="image/x-icon">
+  <script type="module" crossorigin src="/assets/teacherResources-CFet4Yg3.js"></script>
+  <link rel="modulepreload" crossorigin href="/assets/firebase-B3bAttLw.js">
+  <link rel="modulepreload" crossorigin href="/assets/global-floating-logout-Em6X96d7.js">
+  <link rel="stylesheet" crossorigin href="/assets/teacherResources-B1yFPKCW.css">
+</head>
+
+<body>
+  <div class="sidebar">
+    <div>
+      <div class="profile">
+        <div class="symbol">🎓</div>
+        <h3 id="teacherName"></h3>
+        <p>Teacher</p>
+      </div>
+      <div class="nav-links">
+        <a href="/teachers/teacherdashboard.html"><i class="fas fa-home"></i> Dashboard</a>
+        <a href="/teachers/myclasses.html"><i class="fas fa-users"></i> My Classes</a>
+        <a href="/teachers/teacherresources.html" class="active"><i class="fas fa-folder"></i> Resources</a>
+        <a href="/teachers/teachercalendar.html"><i class="fas fa-calendar-alt"></i> Calendar</a>
+        <a href="/teachers/mystudents.html"><i class="fas fa-users"></i> My Students</a>
+      </div>
+
+    </div>
+  </div>
+  </div>
+
+  <div class="main-content">
+    <div class="content-header">
+      <h1>Teaching Resources</h1>
+      <button class="create-btn" onclick="openCreateModal()">
+        <i class="fas fa-plus"></i> Create Resource
+      </button>
+    </div>
+
+    <div class="content-area">
+      <!-- Courses Sidebar -->
+      <div class="courses-sidebar">
+        <div class="sidebar-header">
+          <h3>My Subjects</h3>
+          <span class="total-resources" id="totalResources">0 total resources</span>
+        </div>
+        <div class="courses-list" id="coursesList">
+          <!-- Course items will be generated here -->
+          <!-- Example:
+          <div class="course-item active" data-course-id="math101">
+            <div class="course-info">
+              <h4>Mathematics 101</h4>
+              <span class="course-code">MATH101</span>
+            </div>
+            <span class="resource-count">12 resources</span>
+          </div>
+          -->
+        </div>
+        <div class="uncategorized-section">
+          <div class="course-item" data-course-id="uncategorized">
+            <div class="course-info">
+              <h4>Uncategorized</h4>
+              <span class="course-code">No Subjects assigned</span>
+            </div>
+            <span class="resource-count" id="uncategorizedCount">0 resources</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Resources Main Content -->
+      <div class="resources-main">
+        <div class="resources-header" id="resourcesHeader">
+          <h2 id="selectedCourseTitle">Select a Subjects to view resources</h2>
+          <div class="resource-filters">
+            <select id="resourceTypeFilter">
+              <option value="all">All Types</option>
+              <option value="assignment">Assignments</option>
+              <option value="past_paper">Past Papers</option>
+              <option value="notes">Study Notes</option>
+              <option value="presentation">Presentations</option>
+              <option value="video">Videos</option>
+              <option value="audio">Audio</option>
+              <option value="other">Other</option>
+            </select>
+            <button class="sort-btn" id="sortButton">
+              <i class="fas fa-sort-amount-down"></i> Newest First
+            </button>
+          </div>
+        </div>
+
+        <div class="resources-container" id="resourcesContainer">
+          <div class="empty-state" id="emptyState">
+            <i class="fas fa-folder-open"></i>
+            <h3>No Resources Yet</h3>
+            <p>Select a course from the sidebar to view resources, or create a new resource.</p>
+          </div>
+
+          <div class="loading-circle" id="loadingCircle"></div>
+
+          <div class="resources-grid" id="resourcesGrid">
+            <!-- Resources will be populated here when a course is selected -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Create Resource Modal -->
+  <div id="createModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Create New Resource</h2>
+        <button class="close-btn" onclick="closeCreateModal()">&times;</button>
+      </div>
+      <form id="createResourceForm">
+        <div class="form-group">
+          <label for="createResourceTitle">Resource Title *</label>
+          <input type="text" id="createResourceTitle" name="title" placeholder="Enter resource title" required />
+        </div>
+
+        <div class="form-group">
+          <label for="createResourceCourseId">Course/Subject *</label>
+          <select id="createResourceCourseId" name="course_id" required>
+            <option value="">Select a Subjects</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="createResourceType">Resource Type *</label>
+          <select id="createResourceType" name="resource_type" required>
+            <option value="assignment">Assignment</option>
+            <option value="past_paper">Past Paper</option>
+            <option value="notes">Study Notes</option>
+            <option value="presentation">Presentation</option>
+            <option value="video">Video</option>
+            <option value="audio">Audio</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+
+        <div class="form-group" id="dueDateGroup" style="display: block;">
+          <label for="createResourceDueDate">Due Date *</label>
+          <input type="datetime-local" id="createResourceDueDate" name="due_date" />
+        </div>
+
+        <div class="form-group">
+          <span class="block mb-2 font-semibold">Upload File *</span>
+
+          <div class="file-upload-area" id="fileUploadArea">
+            <i class="fas fa-cloud-upload-alt"></i>
+            <p>Click to upload or drag and drop</p>
+            <span class="file-types">PDF, DOC, PPT, Images, Videos, Audio</span>
+
+            <input type="file" id="createResourceFile"
+              accept=".pdf,.doc,.docx,.ppt,.pptx,.xls,.xlsx,.jpg,.jpeg,.png,.gif,.mp3,.wav,.mp4,.mov,.avi,.txt,.zip"
+              required />
+          </div>
+
+          <span id="fileName" class="file-name"></span>
+        </div>
+
+
+        <div class="form-group">
+          <label for="createResourceDescription">Description</label>
+          <textarea id="createResourceDescription" name="description"
+            placeholder="Add a description or instructions for students." rows="4"></textarea>
+        </div>
+
+        <div class="modal-actions">
+          <button type="button" class="cancel-btn" onclick="closeCreateModal()">Cancel</button>
+          <button type="submit" class="create-btn" id="createResourceBtn">
+            <i class="fas fa-plus"></i> Create Resource
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Resource Preview Modal -->
+  <div id="previewModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Resource Details</h2>
+        <button class="close-btn" onclick="closePreviewModal()">&times;</button>
+      </div>
+      <div class="preview-content" id="previewContent">
+        <!-- Preview content will be populated here -->
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast"></div>
+
+</body>
+
+<script>
+  // Sidebar tab highlight based on current page URL
+  document.addEventListener('DOMContentLoaded', function () {
+    const links = document.querySelectorAll('.nav-links a');
+    const current = window.location.pathname.split('/').pop();
+    links.forEach(link => {
+      const href = link.getAttribute('href');
+      if (href && href.endsWith(current)) {
+        link.classList.add('active');
+      } else {
+        link.classList.remove('active');
+      }
+      link.addEventListener('click', function () {
+        links.forEach(l => l.classList.remove('active'));
+        this.classList.add('active');
+      });
+    });
+  });
+
+</script>
+
+</html>

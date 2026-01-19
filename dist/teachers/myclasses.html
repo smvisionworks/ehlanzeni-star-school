@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Classes - Teacher</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+   <link rel="shortcut icon" href="/assets/LOGO1-owCRzRHS.webp" type="image/x-icon">
+  <script type="module" crossorigin src="/assets/teacherMyClasses-BIQ5MmAE.js"></script>
+  <link rel="modulepreload" crossorigin href="/assets/firebase-B3bAttLw.js">
+  <link rel="modulepreload" crossorigin href="/assets/global-floating-logout-Em6X96d7.js">
+  <link rel="stylesheet" crossorigin href="/assets/teacherMyClasses-DwJ4HkjC.css">
+</head>
+<body>
+    <div class="sidebar">
+        <div>
+            <div class="profile">
+                <div class="symbol">🎓</div>
+                <h3 id="teacherName"></h3>
+                <p>Teacher</p>
+            </div>
+            <div class="nav-links">
+        <a href="/teachers/teacherdashboard.html"><i class="fas fa-home"></i> Dashboard</a>
+        <a href="/teachers/myclasses.html" class="active"><i class="fas fa-users"></i> My Classes</a>
+        <a href="/teachers/teacherresources.html"><i class="fas fa-folder"></i> Resources</a>
+        <a href="/teachers/teachercalendar.html"><i class="fas fa-calendar-alt"></i> Calendar</a>
+        <a href="/teachers/mystudents.html"><i class="fas fa-users"></i> My Students</a>
+      </div>
+           
+        </div>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <h1>My Classes</h1>
+        <div id="loading" class="loading">
+            <div class="loader-spinner"></div>
+            <span>Loading your classes...</span>
+        </div>
+        <div class="class-container" id="classContainer"></div>
+        <div class="past-classes-section">
+            <h2>Past Classes</h2>
+            <div class="past-class-container" id="pastClassContainer"></div>
+        </div>
+    </div>
+
+    <div id="toast" class="toast"></div>
+
+
+<script>
+    // Sidebar tab highlight based on current page URL
+    document.addEventListener('DOMContentLoaded', function() {
+        const links = document.querySelectorAll('.nav-links a');
+        const current = window.location.pathname.split('/').pop();
+        links.forEach(link => {
+            const href = link.getAttribute('href');
+            if (href && href.endsWith(current)) {
+                link.classList.add('active');
+            } else {
+                link.classList.remove('active');
+            }
+            link.addEventListener('click', function() {
+                links.forEach(l => l.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+    });
+</script>
+    
+</body>
+</html>

@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Apply - Ehlanzeni Star School</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link rel="shortcut icon" href="/assets/LOGO1-owCRzRHS.webp" type="image/x-icon">
+  
+  <script type="module" crossorigin src="/assets/apply-DyUMpYf7.js"></script>
+  <link rel="modulepreload" crossorigin href="/assets/firebase-B3bAttLw.js">
+  <link rel="stylesheet" crossorigin href="/assets/apply-Cvppbwzx.css">
+</head>
+
+<body>
+
+  <header>
+    <a href="/index.html" class="logo-link">
+      <div class="logo-area">
+        <img src="/assets/LOGO1-owCRzRHS.webp" alt="Logo">
+        <h2>EHLANZENI STAR SCHOOL</h2>
+      </div>
+    </a>
+    <button class="nav-toggle" aria-label="Toggle navigation">
+        <i class="fas fa-chevron-down"></i>
+    </button>
+    <nav>
+      <a href="/landing/programs.html">PROGRAMS</a>
+      <a href="/landing/admissions.html">ADMISSIONS</a>
+      <a href="/landing/contact.html">CONTACT</a>
+      <a href="/landing/login.html" class="login-symbol-link">
+        <i class="fas fa-user-circle"></i>
+      </a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h1>2026 Student Application</h1>
+  </section>
+
+  <div class="form-container">
+    <form id="applicationForm">
+      <h2>Section A: Student Personal Details</h2>
+      <div class="form-section">
+        <div class="form-row">
+          <div class="form-group">
+            <label>First Name *</label>
+            <input type="text" id="firstName" required>
+          </div>
+          <div class="form-group">
+            <label>Last Name *</label>
+            <input type="text" id="lastName" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>ID Number *</label>
+            <input type="text" id="idNumber" required>
+          </div>
+          <div class="form-group">
+            <label>Race *</label>
+            <select id="race" required>
+              <option value="">Select Race</option>
+              <option value="African">African</option>
+              <option value="Coloured">Coloured</option>
+              <option value="Indian">Indian</option>
+              <option value="White">White</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Email *</label>
+            <input type="email" id="email" required>
+          </div>
+          <div class="form-group">
+            <label>Phone *</label>
+            <input type="tel" id="phone" placeholder="071 123 4567" required>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Create Password *</label>
+            <input type="password" id="password" required>
+            <p class="password-hint">Min. 8 characters (1 Uppercase, 1 Number)</p>
+          </div>
+          <div class="form-group">
+            <label>Confirm Password *</label>
+            <input type="password" id="confirmPassword" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Home Address *</label>
+          <input type="text" id="addressLine1" placeholder="Street Address" required>
+          <input type="text" id="addressLine2" placeholder="Apartment, suite, unit, etc. (optional)">
+          <div class="form-row">
+            <input type="text" id="city" placeholder="City" required>
+            <select id="province" required>
+              <option value="">Select Province</option>
+              <option value="Eastern Cape">Eastern Cape</option>
+              <option value="Free State">Free State</option>
+              <option value="Gauteng">Gauteng</option>
+              <option value="KwaZulu-Natal">KwaZulu-Natal</option>
+              <option value="Limpopo">Limpopo</option>
+              <option value="Mpumalanga">Mpumalanga</option>
+              <option value="North West">North West</option>
+              <option value="Northern Cape">Northern Cape</option>
+              <option value="Western Cape">Western Cape</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <input type="text" id="postalCode" placeholder="Postal Code" required>
+            <select id="country">
+              <option>South Africa</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <h2>Section B: Education & Subjects</h2>
+      <div class="form-section">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Highest Grade Passed *</label>
+            <select id="highestGrade" required>
+              <option value="">Select Grade</option>
+              <option>12</option>
+             
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Attendance Type *</label>
+            <select id="attendanceType" required>
+              <option value="">Select Attendance Type</option>
+              <option>Part Time. Mon - Fri (16:00 to 19:00)</option>
+              <option>Full Time Mon - Fri (08:00 to 15:00)</option>
+              <option>Saturday (08:00 to 14:00)</option>
+              <option>Online Classes (Pre-recorded)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Subjects Registering *</label>
+          <p class="text-sm text-gray-500">Click on the subjects you wish to register for:</p>
+          
+          <div class="subjects-grid">
+            <div>
+              <input type="checkbox" id="sub_math" class="subject-checkbox" value="Mathematics">
+              <label for="sub_math" class="subject-label">Mathematics</label>
+            </div>
+            <div>
+              <input type="checkbox" id="sub_mathlit" class="subject-checkbox" value="Mathematical Literacy">
+              <label for="sub_mathlit" class="subject-label">Mathematical Literacy</label>
+            </div>
+            <div>
+              <input type="checkbox" id="sub_phys" class="subject-checkbox" value="Physical Sciences">
+              <label for="sub_phys" class="subject-label">Physical Science</label>
+            </div>
+            <div>
+              <input type="checkbox" id="sub_bus" class="subject-checkbox" value="Business Studies">
+              <label for="sub_bus" class="subject-label">Business Studies</label>
+            </div>
+            <div>
+              <input type="checkbox" id="sub_engfal" class="subject-checkbox" value="English FAL">
+              <label for="sub_engfal" class="subject-label">English FAL</label>
+            </div>
+            <div>
+              <input type="checkbox" id="sub_agri" class="subject-checkbox" value="Agricultural Sciences">
+              <label for="sub_agri" class="subject-label">Agricultural Sciences</label>
+            </div>
+            <div>
+              <input type="checkbox" id="sub_acc" class="subject-checkbox" value="Accounting">
+              <label for="sub_acc" class="subject-label">Accounting</label>
+            </div>
+            <div>
+              <input type="checkbox" id="sub_geo" class="subject-checkbox" value="Geography">
+              <label for="sub_geo" class="subject-label">Geography</label>
+            </div>
+            <div>
+              <input type="checkbox" id="sub_tour" class="subject-checkbox" value="Tourism">
+              <label for="sub_tour" class="subject-label">Tourism</label>
+            </div>
+            <div>
+              <input type="checkbox" id="sub_eco" class="subject-checkbox" value="Economics">
+              <label for="sub_eco" class="subject-label">Economics</label>
+            </div>
+            <div>
+              <input type="checkbox" id="sub_enghl" class="subject-checkbox" value="English Home Language">
+              <label for="sub_enghl" class="subject-label">English Home</label>
+            </div>
+            <div>
+              <input type="checkbox" id="sub_life" class="subject-checkbox" value="Life Sciences">
+              <label for="sub_life" class="subject-label">Life Sciences</label>
+            </div>
+            <div>
+              <input type="checkbox" id="sub_sis" class="subject-checkbox" value="Siswati HL">
+              <label for="sub_sis" class="subject-label">Siswati HL</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="fee-calculator-card">
+          <h3><i class="fas fa-calculator"></i> 2026 Fee Summary</h3>
+          <div class="fee-row">
+            <span>Subjects Selected:</span>
+            <span id="subjectCount">0</span>
+          </div>
+          <div class="fee-row">
+            <span>Monthly Tuition Fee:</span>
+            <span id="monthlyFeeDisplay" style="font-weight: bold; color: #1e90ff;">R 0</span>
+          </div>
+          <div class="fee-row">
+            <span>Registration Fee (Once-off):</span>
+            <span>R 1 500</span>
+          </div>
+          <div class="fee-row">
+            <span>Exam Fee (Once-off):</span>
+            <span>R 1 200</span>
+          </div>
+          <p style="font-size: 0.8em; color: #666; font-style: italic; margin-top: 10px;">
+            * Tuition fees based on the 2026 Online Classes structure.
+          </p>
+        </div>
+      </div>
+
+      <h2>Section C: Parent / Legal Guardian Details</h2>
+      <div class="form-section">
+        <div class="form-row">
+          <div class="form-group">
+            <label>First Name *</label>
+            <input type="text" id="guardianFirstName" required>
+          </div>
+          <div class="form-group">
+            <label>Last Name *</label>
+            <input type="text" id="guardianLastName" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>ID Number *</label>
+            <input type="text" id="guardianIdNumber" required>
+          </div>
+          <div class="form-group">
+            <label>Race *</label>
+            <select id="guardianRace" required>
+              <option value="">Select Race</option>
+              <option value="African">African</option>
+              <option value="Coloured">Coloured</option>
+              <option value="Indian">Indian</option>
+              <option value="White">White</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Guardian Phone *</label>
+            <input type="tel" id="guardianPhone" required>
+          </div>
+          <div class="form-group">
+            <label>Guardian Email *</label>
+            <input type="email" id="guardianEmail" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Employment Status *</label>
+          <select id="guardianEmploymentStatus" required>
+            <option value="">Select Status</option>
+            <option>Employed</option>
+            <option>Self-Employed</option>
+            <option>Unemployed</option>
+          </select>
+        </div>
+      </div>
+
+      <h2>Section D: Documents & Declaration</h2>
+      <div class="form-section">
+        <div class="form-group">
+          <label>Upload Previous Results *</label>
+          <input type="file" id="previousResults" accept=".pdf,.jpg,.jpeg,.webp" required>
+        </div>
+        <div class="form-group">
+          <label>Upload Certified ID Copy (Student) *</label>
+          <input type="file" id="studentIdCopy" accept=".pdf,.jpg,.jpeg,.webp" required>
+        </div>
+        <div class="form-group">
+          <label>Upload Certified ID Copy (Guardian) *</label>
+          <input type="file" id="guardianIdCopy" accept=".pdf,.jpg,.jpeg,.webp" required>
+        </div>
+
+        <div class="form-group" style="margin-top:20px; background: #fffbe6; padding: 15px; border-radius: 5px;">
+          <p><strong>Declaration:</strong> I/We confirm the details above are correct and agree to the 2026 fee structure.</p>
+          <input type="text" id="declarationName" placeholder="Full Name of Payer" required style="margin-bottom:10px;">
+          <div class="form-row">
+            <input type="text" id="signedAt" placeholder="Signed At (City)" required>
+            <input type="date" id="declarationDate" required>
+          </div>
+          <div class="form-row" style="margin-top:10px;">
+            <input type="text" id="guardianSignature" placeholder="Guardian Signature (Type Name)" required>
+            <input type="text" id="studentSignature" placeholder="Student Signature (Type Name)" required>
+          </div>
+        </div>
+      </div>
+
+      <button type="submit" id="submitBtn">Submit Application</button>
+    </form>
+  </div>
+
+  <div class="back-home">
+    <a href="/index.html">← Back to Home</a>
+  </div>
+
+  <footer>
+    <div class="footer-bg-pattern">
+        <img src="/assets/LOGO1-owCRzRHS.webp" alt="">
+    </div>
+    <div class="footer-bg-overlay"></div>
+
+    <div class="footer-content">
+        <!-- Social Media -->
+        <div class="footer-social">
+            <a href="https://www.facebook.com/ehlanzenistarschool" target="_blank">
+                <i class="fab fa-facebook-f"></i>
+            </a>
+            <a href="https://wa.me/27822672815" target="_blank">
+                <i class="fab fa-whatsapp"></i>
+            </a>
+        </div>
+
+        <!-- Quick Links -->
+        <div class="footer-links">
+            <a href="/index.html">Home</a>
+            <a href="/landing/programs.html">Programs</a>
+            <a href="/landing/admissions.html">Admissions</a>
+            <a href="/landing/contact.html">Contact</a>
+            <a href="/landing/privacy.html">Privacy Policy</a>
+        </div>
+
+        <!-- Contact Info -->
+        <div class="footer-contact">
+            <a href="mailto:ehlanzenistarschool@gmail.com" class="footer-contact-item">
+                <i class="fas fa-envelope"></i>
+                <span>ehlanzenistarschool@gmail.com</span>
+            </a>
+            <span class="footer-contact-separator">•</span>
+            <a href="tel:+27135160030" class="footer-contact-item">
+                <i class="fas fa-phone-alt"></i>
+                <span>+27 13 516 0030</span>
+            </a>
+            <span class="footer-contact-separator">•</span>
+            <div class="footer-contact-item" style="cursor: default;">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>10 Henshall Street, Nelspruit</span>
+            </div>
+        </div>
+
+        <!-- Divider -->
+        <div class="footer-divider"></div>
+
+        <!-- Copyright & Dev -->
+        <div class="footer-copyright">
+            <div>© 2026 EHLANZENI STAR SCHOOL. All rights reserved.</div>
+            <div style="font-size: 0.75rem;">
+                Developed by <a href="https://smvisionworks.com" target="_blank" class="footer-dev-link">SM VISION WORKS</a>
+            </div>
+        </div>
+    </div>
+  </footer>
+
+  <div id="toast" class="toast" style="display:none; position: fixed; bottom: 20px; right: 20px; padding: 15px; color: white; border-radius: 5px; z-index: 1000;"></div>
+
+  <script>
+    /* Nav toggle script for mobile drawer */
+    const toggle = document.querySelector('.nav-toggle');
+    const nav = document.querySelector('nav');
+    const icon = toggle.querySelector('i');
+
+    if (toggle && nav) {
+        toggle.addEventListener('click', () => {
+            nav.classList.toggle('open');
+            toggle.classList.toggle('open');
+            
+            if (nav.classList.contains('open')) {
+                icon.classList.replace('fa-chevron-down', 'fa-chevron-up');
+            } else {
+                icon.classList.replace('fa-chevron-up', 'fa-chevron-down');
+            }
+        });
+    }
+  </script>
+  <script>
+    // Fee Calculation Logic
+    const checkboxes = document.querySelectorAll('.subject-checkbox');
+    const countDisplay = document.getElementById('subjectCount');
+    const feeDisplay = document.getElementById('monthlyFeeDisplay');
+
+    function updateFees() {
+      const count = document.querySelectorAll('.subject-checkbox:checked').length;
+      let fee = 0;
+
+      // Fee tiers for 2026
+      if (count === 1) fee = 500;
+      else if (count === 2) fee = 750;
+      else if (count === 3) fee = 1000;
+      else if (count === 4) fee = 1250;
+      else if (count >= 5) fee = 1500;
+
+      countDisplay.textContent = count;
+      feeDisplay.textContent = "R " + fee.toLocaleString();
+    }
+
+    checkboxes.forEach(cb => cb.addEventListener('change', updateFees));
+  </script>
+</body>
+
+</html>
